@@ -1,0 +1,48 @@
+{
+  "name": "ml-conrec",
+  "version": "0.0.1",
+  "description": "JavaScript implementation of the CONREC contouring algorithm",
+  "main": "./src/index.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "eslint": "eslint src",
+    "eslint-fix": "npm run eslint -- --fix",
+    "test": "npm run test-mocha && npm run eslint",
+    "test-mocha": "mocha --require should --reporter mocha-better-spec-reporter"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mljs/conrec.git"
+  },
+  "keywords": [
+    "algorithm",
+    "contour",
+    "plot",
+    "conrec",
+    "contouring",
+    "machine",
+    "learning",
+    "data",
+    "mining",
+    "datamining"
+  ],
+  "author": "Michaël Zasso",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mljs/conrec/issues"
+  },
+  "homepage": "https://github.com/mljs/conrec#readme",
+  "devDependencies": {
+    "eslint": "^3.0.1",
+    "jcampconverter": "^2.6.0",
+    "mocha": "^2.5.3",
+    "mocha-better-spec-reporter": "^3.0.2",
+    "should": "^9.0.2"
+  },
+  "dependencies": {
+    "js-range": "^1.0.0",
+    "ml-stat": "^1.2.0"
+  }
+}
