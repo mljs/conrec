@@ -6,7 +6,8 @@ const stat = require('ml-stat/matrix');
 const ConrecLib = require('./Conrec').Conrec;
 
 const defaultOptions = {
-    nLevels: 10
+    nLevels: 10,
+    keepLevels: false
 };
 
 class Conrec {
@@ -18,7 +19,6 @@ class Conrec {
         this.xs = options.xs ? options.xs : range(0, this.xLength, 1);
         this.ys = options.ys ? options.ys : range(0, this.yLength, 1);
         this.levels = new Map();
-        this.keepLevels = !!options.keepLevels;
         this.hasMinMax = false;
     }
 
@@ -34,7 +34,7 @@ class Conrec {
             levels = range(this.min, this.max + interval, interval);
         }
         levels.sort((a, b) => a - b);
-        if (this.keepLevels) {
+        if (options.keepLevels) {
             const levelsToCompute = [];
             const result = levels.map(level => {
                 if (this.levels.has(level)) {
@@ -46,7 +46,7 @@ class Conrec {
             });
             if (levelsToCompute.length > 0) {
                 conrec.contour(this.matrix, 0, this.xLength - 1, 0, this.yLength - 1, this.xs, this.ys, levelsToCompute.length, levelsToCompute);
-                const contours = getContours(conrec.contourList());
+                const contours = _getContours(conrec.contourList());
                 result.forEach(contour => {
                     if (contour.data === null) {
                         contour.data = contours.shift();
@@ -74,7 +74,7 @@ class Conrec {
     }
 }
 
-function getContours(list) {
+function _getContours(list) {
     var result = [];
     for (var i = 0; i < list.length; i++) {
         var el = list[i];

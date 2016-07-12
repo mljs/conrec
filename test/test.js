@@ -6,16 +6,19 @@ const Conrec = require('..');
 
 const data = fs.readFileSync(__dirname + '/data/zhmbc_0.jdx', 'utf8');
 const parsed = converter.convert(data, {noContour: true});
-const conrec = new Conrec(parsed.minMax.z, {keepLevels: true});
+const conrec = new Conrec(parsed.minMax.z);
 console.time('1');
-conrec.getContours({levels: [308332726.625]});
+conrec.getContours({levels: [308332726.625], keepLevels: true});
 console.timeEnd('1');
 console.time('2');
-conrec.getContours({levels: [359823508.9166666]});
+conrec.getContours({levels: [359823508.9166666], keepLevels: true});
 console.timeEnd('2');
 console.time('3');
-conrec.getContours({levels: [308332726.625, 359823508.9166666]});
+conrec.getContours({levels: [308332726.625, 359823508.9166666], keepLevels: true});
 console.timeEnd('3');
+console.time('4');
+conrec.getContours({levels: [308332726.625, 359823508.9166666], keepLevels: false});
+console.timeEnd('4');
   //  });
 //});
 
