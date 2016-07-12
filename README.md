@@ -7,6 +7,8 @@
   
 JavaScript implementation of the CONREC contouring algorithm
 
+Based on the JS code from https://github.com/jasondavies/conrec.js
+
 ## Installation
 
 ```
