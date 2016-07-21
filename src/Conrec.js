@@ -76,12 +76,13 @@ const MINUSEPSILON = 0 - EPSILON;
  *                               custom "contour builder", which populates the
  *                               contours property.
  */
-function Conrec(drawContour) {
+function Conrec(drawContour, timeout) {
     this.drawContour = drawContour;
     this.h  = new Array(5);
     this.sh = new Array(5);
     this.xh = new Array(5);
     this.yh = new Array(5);
+    this.timeout = timeout;
 }
 
 /**
@@ -109,6 +110,8 @@ function Conrec(drawContour) {
 Conrec.prototype.contour = function(d, ilb, iub, jlb, jub, x, y, nc, z) {
     var h = this.h, sh = this.sh, xh = this.xh, yh = this.yh;
     var drawContour = this.drawContour;
+    var timeout = this.timeout;
+    var start = Date.now();
 
     /** private */
     function xsect(p1, p2){
@@ -150,6 +153,9 @@ Conrec.prototype.contour = function(d, ilb, iub, jlb, jub, x, y, nc, z) {
     ];
 
     for (var j=(jub-1);j>=jlb;j--) {
+        if (timeout && (Date.now() - start) > timeout) {
+            throw new Error('timeout: contour generation could not finish in less than ' + timeout + 'ms');
+        }
         for (var i=ilb;i<=iub-1;i++) {
             var temp1, temp2;
             temp1 = Math.min(d[i][j],d[i][j+1]);

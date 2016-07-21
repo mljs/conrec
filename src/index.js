@@ -8,7 +8,8 @@ const BasicContourDrawer = require('./BasicContourDrawer');
 const ShapeContourDrawer = require('./ShapeContourDrawer');
 
 const defaultOptions = {
-    nbLevels: 10
+    nbLevels: 10,
+    timeout: 0
 };
 
 class Conrec {
@@ -47,7 +48,7 @@ class Conrec {
             }
         }
 
-        const conrec = new ConrecLib(contourDrawer.drawContour.bind(contourDrawer));
+        const conrec = new ConrecLib(contourDrawer.drawContour.bind(contourDrawer), options.timeout);
         conrec.contour(this.matrix, 0, this.xLength - 1, 0, this.yLength - 1, this.xs, this.ys, levels.length, levels);
         return contourDrawer.getContour();
     }
