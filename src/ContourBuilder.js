@@ -74,7 +74,7 @@ function ContourBuilder(level) {
     this.count = 0;
 }
 
-ContourBuilder.prototype.remove_seq = function(list) {
+ContourBuilder.prototype.removeSeq = function (list) {
     // if list is the first item, static ptr s is updated
     if (list.prev) {
         list.prev.next = list.next;
@@ -88,7 +88,7 @@ ContourBuilder.prototype.remove_seq = function(list) {
     --this.count;
 };
 
-ContourBuilder.prototype.addSegment = function(a, b) {
+ContourBuilder.prototype.addSegment = function (a, b) {
     var ss = this.s;
     var ma = null;
     var mb = null;
@@ -96,7 +96,7 @@ ContourBuilder.prototype.addSegment = function(a, b) {
     var prependB = false;
 
     while (ss) {
-        if (ma == null) {
+        if (ma === null) {
             // no match for a yet
             if (pointsEqual(a, ss.head.p)) {
                 ma = ss;
@@ -105,7 +105,7 @@ ContourBuilder.prototype.addSegment = function(a, b) {
                 ma = ss;
             }
         }
-        if (mb == null) {
+        if (mb === null) {
             // no match for b yet
             if (pointsEqual(b, ss.head.p)) {
                 mb = ss;
@@ -115,7 +115,7 @@ ContourBuilder.prototype.addSegment = function(a, b) {
             }
         }
         // if we matched both no need to continue searching
-        if (mb != null && ma != null) {
+        if (mb !== null && ma !== null) {
             break;
         } else {
             ss = ss.next;
@@ -123,9 +123,10 @@ ContourBuilder.prototype.addSegment = function(a, b) {
     }
 
     // c is the case selector based on which of ma and/or mb are set
-    var c = ((ma != null) ? 1 : 0) | ((mb != null) ? 2 : 0);
+    var c = ((ma !== null) ? 1 : 0) | ((mb !== null) ? 2 : 0);
+    var pp;
 
-    switch(c) {
+    switch (c) {
         case 0:   // both unmatched, add as new sequence
             var aa = {p: a, prev: null};
             var bb = {p: b, next: null};
@@ -144,7 +145,7 @@ ContourBuilder.prototype.addSegment = function(a, b) {
             break;
 
         case 1:   // a matched, b did not - thus b extends sequence ma
-            var pp = {p: b};
+            pp = {p: b};
 
             if (prependA) {
                 pp.next = ma.head;
@@ -160,7 +161,7 @@ ContourBuilder.prototype.addSegment = function(a, b) {
             break;
 
         case 2:   // b matched, a did not - thus a extends sequence mb
-            var pp = {p: a};
+            pp = {p: a};
 
             if (prependB) {
                 pp.next = mb.head;
@@ -179,7 +180,7 @@ ContourBuilder.prototype.addSegment = function(a, b) {
             // if the sequences are the same, do nothing, as we are simply closing this path (could set a flag)
 
             if (ma === mb) {
-                var pp = {p: ma.tail.p, next: ma.head, prev: null};
+                pp = {p: ma.tail.p, next: ma.head, prev: null};
                 ma.head.prev = pp;
                 ma.head = pp;
                 ma.closed = true;
@@ -189,7 +190,7 @@ ContourBuilder.prototype.addSegment = function(a, b) {
             // there are 4 ways the sequence pair can be joined. The current setting of prependA and
             // prependB will tell us which type of join is needed. For head/head and tail/tail joins
             // one sequence needs to be reversed
-            switch((prependA ? 1 : 0) | (prependB ? 2 : 0)) {
+            switch ((prependA ? 1 : 0) | (prependB ? 2 : 0)) {
                 case 0:   // tail-tail
                     // reverse ma and append to mb
                     reverseList(ma);
@@ -201,7 +202,7 @@ ContourBuilder.prototype.addSegment = function(a, b) {
                     mb.tail = ma.tail;
 
                     //discard ma sequence record
-                    this.remove_seq(ma);
+                    this.removeSeq(ma);
                     break;
 
                 case 3:   // head-head
@@ -215,7 +216,7 @@ ContourBuilder.prototype.addSegment = function(a, b) {
                     ma.tail = mb.tail;
 
                     //discard mb sequence record
-                    this.remove_seq(mb);
+                    this.removeSeq(mb);
                     break;
             }
     }
@@ -230,10 +231,10 @@ function pointsEqual(a, b) {
 
 function reverseList(list) {
     var pp = list.head;
-
+    var temp;
     while (pp) {
         // swap prev/next pointers
-        var temp = pp.next;
+        temp = pp.next;
         pp.next = pp.prev;
         pp.prev = temp;
 
@@ -242,7 +243,7 @@ function reverseList(list) {
     }
 
     // swap head/tail pointers
-    var temp = list.head;
+    temp = list.head;
     list.head = list.tail;
     list.tail = temp;
 }
