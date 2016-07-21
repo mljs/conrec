@@ -12,6 +12,13 @@ const defaultOptions = {
     timeout: 0
 };
 
+/**
+ *
+ * @class Conrec
+ * @param {number[][]} matrix
+ * @param {number[]} [options.xs]
+ * @param {number[]} [options.ys]
+ */
 class Conrec {
     constructor(matrix, options) {
         options = options || {};
@@ -24,6 +31,14 @@ class Conrec {
         this.hasMinMax = false;
     }
 
+    /**
+     *
+     * @param {number[]} [options.levels]
+     * @param {number} [options.nbLevels=10]
+     * @param {string|object} [options.contourDrawer='basic']
+     * @param {number} [options.timeout=0]
+     * @return {*}
+     */
     drawContour(options) {
         options = Object.assign({}, defaultOptions, options);
 

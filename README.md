@@ -15,6 +15,8 @@ Based on the JS code from https://github.com/jasondavies/conrec.js
 $ npm install ml-conrec
 ```
 
+## [Documentation](https://mljs.github.io/conrec/)
+
 ## License
 
 [MIT](./LICENSE)

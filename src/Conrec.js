@@ -71,7 +71,7 @@ const MINUSEPSILON = 0 - EPSILON;
 
 /**
  * Implements CONREC.
- *
+ * @private
  * @param {function} drawContour function for drawing contour.  Defaults to a
  *                               custom "contour builder", which populates the
  *                               contours property.
@@ -96,7 +96,7 @@ function Conrec(drawContour, timeout) {
  * Any number of contour levels may be specified but they must be in order of
  * increasing value.
  *
- *
+ * @private
  * @param {number[][]} d - matrix of data to contour
  * @param {number} ilb,iub,jlb,jub - index bounds of data matrix
  *
