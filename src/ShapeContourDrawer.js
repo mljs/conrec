@@ -66,43 +66,39 @@
  * MODIFICATIONS.
  */
 
-'use strict';
+import { ContourBuilder } from './ContourBuilder';
 
-const ContourBuilder = require('./ContourBuilder');
+export class ShapeContourDrawer {
+  constructor(levels) {
+    this.contours = new Array(levels.length);
+    for (var i = 0; i < levels.length; i++) {
+      this.contours[i] = new ContourBuilder(levels[i]);
+    }
+  }
 
-class ShapeContourDrawer {
-    constructor(levels) {
-        this.contours = new Array(levels.length);
-        for (var i = 0; i < levels.length; i++) {
-            this.contours[i] = new ContourBuilder(levels[i]);
+  drawContour(x1, y1, x2, y2, z, k) {
+    this.contours[k].addSegment({ x: x1, y: y1 }, { x: x2, y: y2 });
+  }
+
+  getContour() {
+    var l = [];
+    var a = this.contours;
+    for (var k = 0; k < a.length; k++) {
+      var s = a[k].s;
+      var level = a[k].level;
+      while (s) {
+        var h = s.head;
+        var l2 = [];
+        l2.level = level;
+        l2.k = k;
+        while (h && h.p) {
+          l2.push(h.p);
+          h = h.next;
         }
+        l.push(l2);
+        s = s.next;
+      }
     }
-
-    drawContour(x1, y1, x2, y2, z, k) {
-        this.contours[k].addSegment({x: x1, y: y1}, {x: x2, y: y2});
-    }
-
-    getContour() {
-        var l = [];
-        var a = this.contours;
-        for (var k = 0; k < a.length; k++) {
-            var s = a[k].s;
-            var level = a[k].level;
-            while (s) {
-                var h = s.head;
-                var l2 = [];
-                l2.level = level;
-                l2.k = k;
-                while (h && h.p) {
-                    l2.push(h.p);
-                    h = h.next;
-                }
-                l.push(l2);
-                s = s.next;
-            }
-        }
-        return l;
-    }
+    return l;
+  }
 }
-
-module.exports = ShapeContourDrawer;

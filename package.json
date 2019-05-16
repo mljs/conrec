@@ -2,15 +2,22 @@
   "name": "ml-conrec",
   "version": "1.0.0",
   "description": "JavaScript implementation of the CONREC contouring algorithm",
-  "main": "./src/index.js",
+  "main": "conrec.js",
+  "module": "./src/index.js",
+  "types": "conrec.d.ts",
   "files": [
-    "src"
+    "src",
+    "conrec.js",
+    "conrec.d.ts"
   ],
   "scripts": {
+    "compile": "rollup -c",
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
-    "test": "npm run test-mocha && npm run eslint",
-    "test-mocha": "mocha --require should --reporter mocha-better-spec-reporter"
+    "prepublishOnly": "npm run compile",
+    "test": "npm run eslint",
+    "test-only": "jest",
+    "test-coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -35,14 +42,13 @@
   },
   "homepage": "https://github.com/mljs/conrec#readme",
   "devDependencies": {
-    "eslint": "^3.0.1",
-    "jcampconverter": "^2.6.0",
-    "mocha": "^3.1.2",
-    "mocha-better-spec-reporter": "^3.0.2",
-    "should": "^11.1.1"
-  },
-  "dependencies": {
-    "js-range": "^1.0.0",
-    "ml-stat": "^1.2.0"
+    "@babel/plugin-transform-modules-commonjs": "^7.4.4",
+    "eslint": "^5.16.0",
+    "eslint-config-cheminfo": "^1.20.1",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest": "^22.5.1",
+    "jcampconverter": "^3.0.1",
+    "jest": "^24.7.1",
+    "rollup": "^1.10.1"
   }
 }
