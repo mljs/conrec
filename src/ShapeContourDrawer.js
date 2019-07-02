@@ -69,15 +69,20 @@
 import { ContourBuilder } from './ContourBuilder';
 
 export class ShapeContourDrawer {
-  constructor(levels) {
+  constructor(levels, swapAxes) {
     this.contours = new Array(levels.length);
     for (var i = 0; i < levels.length; i++) {
       this.contours[i] = new ContourBuilder(levels[i]);
     }
+    this.swapAxes = swapAxes;
   }
 
   drawContour(x1, y1, x2, y2, z, k) {
-    this.contours[k].addSegment({ x: x1, y: y1 }, { x: x2, y: y2 });
+    if (!this.swapAxes) {
+      this.contours[k].addSegment({ x: y1, y: x1 }, { x: y2, y: x2 });
+    } else {
+      this.contours[k].addSegment({ x: y1, y: x1 }, { x: y2, y: x2 });
+    }
   }
 
   getContour() {

@@ -8,6 +8,7 @@ declare module 'ml-conrec' {
     nbLevels?: number;
     contourDrawer?: 'basic' | 'shape';
     timeout?: number;
+    swapAxes?: boolean;
   }
 
   export interface ConrecContourOptionsLevels {
