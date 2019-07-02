@@ -1,35 +1,50 @@
-import fs from  'fs';
+import fs from 'fs';
+
 import converter from 'jcampconverter';
 
 import { Conrec } from '..';
 
 describe('conrec basic test', () => {
-  console.log('start');
   const data = fs.readFileSync(`${__dirname}/data/zhmbc_0.jdx`, 'utf8');
-    console.log('done')
   const parsed = converter.convert(data, { noContour: true });
-  console.log('done')
   const conrec = new Conrec(parsed.minMax.z);
-console.log('done2')
-  var levels = [-1000000, 1000000];
-  var nbLevels = levels.length;
-  var timeout = 10000;
 
-  const basic = conrec.drawContour({
-    contourDrawer: 'basic',
-    levels,
-    nbLevels,
-    timeout
+  it('no result because level too far', () => {
+    const basic = conrec.drawContour({
+      contourDrawer: 'basic',
+      levels: [-1000000000, 1000000000],
+      timeout: 10000
+    });
+
+    expect(basic).toStrictEqual([
+      { lines: [], zValue: -1000000000 },
+      { lines: [], zValue: 1000000000 }
+    ]);
   });
 
-  expect(basic).toMatchSnapshot();
+  it('2 specified levels', () => {
+    const basic = conrec.drawContour({
+      contourDrawer: 'basic',
+      levels: [-100000, 100000],
+      timeout: 10000
+    });
 
-  const shape = conrec.drawContour({
-    contourDrawer: 'shape',
-    levels,
-    nbLevels,
-    timeout
+    expect(basic).toHaveLength(2);
+    expect(basic[0].lines).toHaveLength(36864);
+    expect(basic[1].lines).toHaveLength(119720);
   });
 
-  expect(shape).toMatchSnapshot();
+  it('auto select levels', () => {
+    const basic = conrec.drawContour({
+      contourDrawer: 'basic',
+      nbLevels: 10,
+      timeout: 10000
+    });
+
+    expect(basic).toHaveLength(10);
+    expect(basic[0].lines).toHaveLength(0);
+    expect(basic[1].lines).toHaveLength(4984);
+    expect(basic[8].lines).toHaveLength(32);
+    expect(basic[9].lines).toHaveLength(0);
+  });
 });
