@@ -45,6 +45,7 @@ describe('conrec basic test', () => {
     expect(basic[0].lines).toHaveLength(0);
     expect(basic[1].lines).toHaveLength(4984);
     expect(basic[8].lines).toHaveLength(32);
+    expect(basic[8].lines).toMatchSnapshot();
     expect(basic[9].lines).toHaveLength(0);
   });
 });

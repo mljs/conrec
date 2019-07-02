@@ -31,6 +31,7 @@ export class Conrec {
    * @param {number} [options.nbLevels=10]
    * @param {string} [options.contourDrawer='basic'] - 'basic' or 'shape'
    * @param {number} [options.timeout=0]
+   * @param {boolean} [optoins.invert=false] invert X and Y
    * @return {any}
    */
   drawContour(options) {
