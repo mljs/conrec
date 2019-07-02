@@ -15,7 +15,7 @@
     "eslint": "eslint src",
     "eslint-fix": "npm run eslint -- --fix",
     "prepublishOnly": "npm run compile",
-    "test": "npm run eslint",
+    "test": "npm run test-coverage && npm run eslint",
     "test-only": "jest",
     "test-coverage": "jest --coverage"
   },
@@ -47,6 +47,7 @@
     "eslint-config-cheminfo": "^1.20.1",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jest": "^22.5.1",
+    "esm": "^3.2.25",
     "jcampconverter": "^3.0.1",
     "jest": "^24.7.1",
     "rollup": "^1.10.1"
