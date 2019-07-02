@@ -81,7 +81,7 @@ export class ShapeContourDrawer {
     if (!this.swapAxes) {
       this.contours[k].addSegment({ x: y1, y: x1 }, { x: y2, y: x2 });
     } else {
-      this.contours[k].addSegment({ x: y1, y: x1 }, { x: y2, y: x2 });
+      this.contours[k].addSegment({ x: x1, y: y1 }, { x: x2, y: y2 });
     }
   }
 
