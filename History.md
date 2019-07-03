@@ -1,3 +1,22 @@
+# [3.0.0](https://github.com/mljs/conrec/compare/v2.0.0...v3.0.0) (2019-07-03)
+
+
+### Features
+
+* add a swapAxes option and swap the default axes ([#6](https://github.com/mljs/conrec/issues/6)) ([3341203](https://github.com/mljs/conrec/commit/3341203))
+
+
+### BREAKING CHANGES
+
+* In previous versions, the X axis was along the rows of the data matrix
+and the Y axis along the columns. This was not intuitive regarding how
+the contours are then drawn. The default was changed to now consider X
+along the columns and Y along the rows respectively.
+Pass `swapAxes: true` to the Conrec constructor to get the previous
+behavior.
+
+
+
 # [2.0.0](https://github.com/mljs/conrec/compare/v1.0.0...v2.0.0) (2019-05-16)
 
 
