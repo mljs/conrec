@@ -1,3 +1,10 @@
+## [3.1.0](https://github.com/mljs/conrec/compare/v3.0.0...v3.1.0) (2021-02-26)
+
+
+### Features
+
+* improve speed ([28005aa](https://github.com/mljs/conrec/commit/28005aa2a3ce465d21793461155c642920ce526c))
+
 # [3.0.0](https://github.com/mljs/conrec/compare/v2.0.0...v3.0.0) (2019-07-03)
 
 
