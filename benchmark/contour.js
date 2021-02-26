@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import { join } from 'path'
 
-import converter from 'jcampconverter';
+import { convert } from 'jcampconverter';
 
 import { Conrec } from '../src/index.js';
 
 const data = readFileSync(join(__dirname, '../src/__tests__/data/zhmbc_0.jdx'), 'utf8');
-const parsed = converter.convert(data, { noContour: true });
+const parsed = convert(data, { noContour: true }).flatten[0];
 
 for (let i = 0; i < parsed.minMax.z.length; i++) {
   parsed.minMax.z[i] = Float64Array.from(parsed.minMax.z[i])

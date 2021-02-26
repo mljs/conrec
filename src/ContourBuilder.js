@@ -147,11 +147,11 @@ export class ContourBuilder {
     --this.count;
   }
   addSegment(a, b) {
-    var ss = this.s;
-    var ma = null;
-    var mb = null;
-    var prependA = false;
-    var prependB = false;
+    let ss = this.s;
+    let ma = null;
+    let mb = null;
+    let prependA = false;
+    let prependB = false;
     while (ss) {
       if (ma === null) {
         // no match for a yet
@@ -179,13 +179,13 @@ export class ContourBuilder {
       }
     }
     // c is the case selector based on which of ma and/or mb are set
-    var c = (ma !== null ? 1 : 0) | (mb !== null ? 2 : 0);
-    var pp;
+    let c = (ma !== null ? 1 : 0) | (mb !== null ? 2 : 0);
+    let pp;
     switch (c) {
       case 0: {
         // both unmatched, add as new sequence
-        var aa = { p: a, prev: null };
-        var bb = { p: b, next: null };
+        let aa = { p: a, prev: null };
+        let bb = { p: b, next: null };
         aa.next = bb;
         bb.prev = aa;
         // create sequence element and push onto head of main list. The order
@@ -280,14 +280,14 @@ export class ContourBuilder {
 }
 
 function pointsEqual(a, b) {
-  var x = a.x - b.x;
-  var y = a.y - b.y;
+  let x = a.x - b.x;
+  let y = a.y - b.y;
   return x * x + y * y < Number.EPSILON;
 }
 
 function reverseList(list) {
-  var pp = list.head;
-  var temp;
+  let pp = list.head;
+  let temp;
   while (pp) {
     // swap prev/next pointers
     temp = pp.next;

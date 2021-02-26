@@ -1,7 +1,7 @@
 export class BasicContourDrawer {
   constructor(levels, swapAxes) {
     this.contour = new Array(levels.length);
-    for (var i = 0; i < levels.length; i++) {
+    for (let i = 0; i < levels.length; i++) {
       this.contour[i] = {
         zValue: levels[i],
         lines: [],

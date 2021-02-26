@@ -71,7 +71,7 @@ import { ContourBuilder } from './ContourBuilder';
 export class ShapeContourDrawer {
   constructor(levels, swapAxes) {
     this.contours = new Array(levels.length);
-    for (var i = 0; i < levels.length; i++) {
+    for (let i = 0; i < levels.length; i++) {
       this.contours[i] = new ContourBuilder(levels[i]);
     }
     this.swapAxes = swapAxes;
@@ -86,14 +86,14 @@ export class ShapeContourDrawer {
   }
 
   getContour() {
-    var l = [];
-    var a = this.contours;
-    for (var k = 0; k < a.length; k++) {
-      var s = a[k].s;
-      var level = a[k].level;
+    let l = [];
+    let a = this.contours;
+    for (let k = 0; k < a.length; k++) {
+      let s = a[k].s;
+      let level = a[k].level;
       while (s) {
-        var h = s.head;
-        var l2 = [];
+        let h = s.head;
+        let l2 = [];
         l2.level = level;
         l2.k = k;
         while (h && h.p) {

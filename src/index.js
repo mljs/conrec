@@ -1,5 +1,5 @@
-import { ConrecLib } from './Conrec';
 import { BasicContourDrawer } from './BasicContourDrawer';
+import { ConrecLib } from './Conrec';
 import { ShapeContourDrawer } from './ShapeContourDrawer';
 
 const defaultOptions = {
@@ -51,7 +51,7 @@ export class Conrec {
   drawContour(options) {
     options = Object.assign({}, defaultOptions, options);
 
-    var levels;
+    let levels;
     if (options.levels) {
       levels = options.levels.slice();
     } else {

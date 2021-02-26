@@ -1,7 +1,3 @@
-import fs from 'fs';
-
-import converter from 'jcampconverter';
-
 import { Conrec } from '..';
 
 describe('shape', () => {
@@ -19,7 +15,7 @@ describe('shape', () => {
       contourDrawer: 'shape',
       levels: [0.5],
     });
-    expect(shape[0]).toHaveLength(25)
+    expect(shape[0]).toHaveLength(25);
   });
 
   it('2 squares', () => {
@@ -37,7 +33,7 @@ describe('shape', () => {
       levels: [0.5],
     });
 
-    expect(shape[0]).toHaveLength(25)
+    expect(shape[0]).toHaveLength(25);
   });
 
   it('2 diagonal squares', () => {
@@ -58,7 +54,7 @@ describe('shape', () => {
       levels: [0.5],
     });
 
-    expect(shape[0]).toHaveLength(49)
+    expect(shape[0]).toHaveLength(49);
   });
 });
 
@@ -67,8 +63,6 @@ function parse(string) {
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter((line) => line);
-  let width = lines[0].length;
-  let height = lines.length;
 
   let matrix = [];
   for (let line of lines) {

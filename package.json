@@ -42,15 +42,16 @@
   },
   "homepage": "https://github.com/mljs/conrec#readme",
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.4.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.13.0",
     "@types/jest": "^26.0.20",
-    "eslint": "^6.0.1",
-    "eslint-config-cheminfo": "^1.20.1",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-jest": "^22.7.1",
+    "eslint": "^7.20.0",
+    "eslint-config-cheminfo": "^5.2.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.5",
     "esm": "^3.2.25",
-    "jcampconverter": "^3.0.4",
-    "jest": "^24.8.0",
-    "rollup": "^1.16.4"
+    "jcampconverter": "^7.7.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "rollup": "^2.40.0"
   }
 }

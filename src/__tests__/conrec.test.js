@@ -1,12 +1,11 @@
 import fs from 'fs';
 
-import converter from 'jcampconverter';
+import { convert } from 'jcampconverter';
 
 import { Conrec } from '..';
 
 const data = fs.readFileSync(`${__dirname}/data/zhmbc_0.jdx`, 'utf8');
-const parsed = converter.convert(data, { noContour: true });
-
+const parsed = convert(data, { noContour: true }).flatten[0];
 describe('conrec basic test', () => {
   it('no result because level too far', () => {
     const conrec = new Conrec(parsed.minMax.z);
