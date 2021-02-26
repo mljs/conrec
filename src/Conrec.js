@@ -108,13 +108,17 @@ export class ConrecLib {
    * @param {number[]} z  - contour levels in increasing order.
    */
   contour(d, ilb, iub, jlb, jub, x, y, nc, z) {
-    var h = this.h;
-    var sh = this.sh;
-    var xh = this.xh;
-    var yh = this.yh;
-    var drawContour = this.drawContour;
-    var timeout = this.timeout;
-    var start = Date.now();
+    const h = this.h;
+    const sh = this.sh;
+    const xh = this.xh;
+    const yh = this.yh;
+
+    const z0 = z[0]
+    const znc1 = z[nc - 1]
+
+    const drawContour = this.drawContour;
+    const timeout = this.timeout;
+    const start = Date.now();
     /** private */
     function xsect(p1, p2) {
       return (h[p2] * xh[p1] - h[p1] * xh[p2]) / (h[p2] - h[p1]);
@@ -126,40 +130,42 @@ export class ConrecLib {
     var m2;
     var m3;
     var case_value;
-    var dmin;
-    var dmax;
     var x1 = 0.0;
     var x2 = 0.0;
     var y1 = 0.0;
     var y2 = 0.0;
+
     // The indexing of im and jm should be noted as it has to start from zero
     // unlike the fortran counter part
-    var im = [0, 1, 1, 0];
-    var jm = [0, 0, 1, 1];
+    const im = [0, 1, 1, 0];
+    const jm = [0, 0, 1, 1];
     // Note that castab is arranged differently from the FORTRAN code because
     // Fortran and C/C++ arrays are transposed of each other, in this case
     // it is more tricky as castab is in 3 dimensions
-    var castab = [
+    const castab = [
       [[0, 0, 8], [0, 2, 5], [7, 6, 9]],
       [[0, 3, 4], [1, 3, 1], [4, 3, 0]],
       [[9, 6, 7], [5, 2, 0], [8, 0, 0]]
     ];
-    for (var j = jub - 1; j >= jlb; j--) {
+    for (let j = jub - 1; j >= jlb; j--) {
       if (timeout && Date.now() - start > timeout) {
         throw new Error(
           `timeout: contour generation could not finish in less than ${timeout}ms`
         );
       }
-      for (var i = ilb; i <= iub - 1; i++) {
-        var temp1, temp2;
-        temp1 = Math.min(d[i][j], d[i][j + 1]);
-        temp2 = Math.min(d[i + 1][j], d[i + 1][j + 1]);
-        dmin = Math.min(temp1, temp2);
-        temp1 = Math.max(d[i][j], d[i][j + 1]);
-        temp2 = Math.max(d[i + 1][j], d[i + 1][j + 1]);
-        dmax = Math.max(temp1, temp2);
-        if (dmax >= z[0] && dmin <= z[nc - 1]) {
-          for (var k = 0; k < nc; k++) {
+      for (let i = ilb; i <= iub - 1; i++) {
+        let dij = d[i][j]
+        let dij1 = d[i][j + 1]
+        let di1j = d[i + 1][j]
+        let di1j1 = d[i + 1][j + 1]
+        let temp1 = dij > dij1 ? dij1 : dij
+        let temp2 = di1j > di1j1 ? di1j1 : di1j // Math.min(di1j, di1j1);
+        let dmin = temp1 > temp2 ? temp2 : temp1 // Math.min(temp1, temp2);
+        temp1 = dij > dij1 ? dij : dij1 // Math.max(dij, dij1);
+        temp2 = di1j > di1j1 ? di1j : di1j1 // Math.max(di1j, di1j1);
+        let dmax = temp1 > temp2 ? temp1 : temp2 // Math.max(temp1, temp2);
+        if (dmax >= z0 && dmin <= znc1) {
+          for (let k = 0; k < nc; k++) {
             if (z[k] >= dmin && z[k] <= dmax) {
               for (var m = 4; m >= 0; m--) {
                 if (m > 0) {
