@@ -14,8 +14,10 @@ for (let i = 0; i < parsed.minMax.z.length; i++) {
 
 const conrec = new Conrec(parsed.minMax.z);
 
+const number = 20
+
 console.time('basic');
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < number; i++) {
 
   conrec.drawContour({
     contourDrawer: 'basic',
@@ -26,7 +28,7 @@ for (let i = 0; i < 20; i++) {
 console.timeEnd('basic');
 
 console.time('shape');
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < number; i++) {
   conrec.drawContour({
     contourDrawer: 'shape',
     levels: [-1000000000, 1000000000],

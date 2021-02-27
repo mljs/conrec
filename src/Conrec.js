@@ -158,16 +158,27 @@ export class ConrecLib {
         let dij1 = d[i][j + 1]
         let di1j = d[i + 1][j]
         let di1j1 = d[i + 1][j + 1]
-        let temp1 = dij > dij1 ? dij1 : dij
-        let temp2 = di1j > di1j1 ? di1j1 : di1j // Math.min(di1j, di1j1);
-        let dmin = temp1 > temp2 ? temp2 : temp1 // Math.min(temp1, temp2);
-        temp1 = dij > dij1 ? dij : dij1 // Math.max(dij, dij1);
-        temp2 = di1j > di1j1 ? di1j : di1j1 // Math.max(di1j, di1j1);
-        let dmax = temp1 > temp2 ? temp1 : temp2 // Math.max(temp1, temp2);
+        let min1, min2, max1, max2
+        if (dij > dij1) {
+          min1 = dij1
+          max1 = dij
+        } else {
+          min1 = dij
+          max1 = dij1
+        }
+        if (di1j > di1j1) {
+          min2 = di1j1
+          max2 = di1j
+        } else {
+          min2 = di1j
+          max2 = di1j1
+        }
+        let dmin = min1 > min2 ? min2 : min1 // Math.min(temp1, temp2);
+        let dmax = max1 > max2 ? max1 : max2 // Math.max(temp1, temp2);
         if (dmax >= z0 && dmin <= znc1) {
           for (let k = 0; k < nc; k++) {
             if (z[k] >= dmin && z[k] <= dmax) {
-              for (var m = 4; m >= 0; m--) {
+              for (let m = 4; m >= 0; m--) {
                 if (m > 0) {
                   // The indexing of im and jm should be noted as it has to
                   // start from zero
@@ -217,7 +228,7 @@ export class ConrecLib {
               //
               //               Scan each triangle in the box
               //
-              for (m = 1; m <= 4; m++) {
+              for (let m = 1; m <= 4; m++) {
                 m1 = m;
                 m2 = 0;
                 if (m != 4) {
