@@ -1,5 +1,5 @@
 import { BasicContourDrawer } from './BasicContourDrawer';
-import { ConrecLib } from './Conrec';
+import { calculateContour } from './calculateContour';
 import { ShapeContourDrawer } from './ShapeContourDrawer';
 
 const defaultOptions = {
@@ -74,15 +74,13 @@ export class Conrec {
       throw new TypeError('contourDrawer must be a string');
     }
 
-    const conrec = new ConrecLib(
-      contourDrawer.drawContour.bind(contourDrawer),
-      options.timeout,
-    );
-    conrec.contour(
+    calculateContour(
       this.matrix,
       this.xs,
       this.ys,
       levels,
+      contourDrawer,
+      { timeout: options.timeout }
     );
     return contourDrawer.getContour();
   }
