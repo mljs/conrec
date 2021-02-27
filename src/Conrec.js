@@ -101,7 +101,6 @@ export class ConrecLib {
    *             the horizontal and vertical coordinates of each sample points.
    * @param {number[]} x  - data matrix column coordinates
    * @param {number[]} y  - data matrix row coordinates
-   * @param {number} nc   - number of contour levels
    * @param {number[]} z  - contour levels in increasing order.
    * @param {object} [options={}]
    * @param {number} [options.ilb] - index bounds of data matrix
@@ -109,12 +108,13 @@ export class ConrecLib {
    * @param {number} [options.jlb] - index bounds of data matrix
    * @param {number} [options.jub] - index bounds of data matrix
    */
-  contour(matrix, x, y, nc, z, options = {}) {
+  contour(matrix, x, y, z, options = {}) {
     const { ilb = 0, iub = matrix.length - 1, jlb = 0, jub = matrix[0].length - 1 } = options
     const h = new Array(5)
     const sh = new Array(5)
     const xh = new Array(5)
     const yh = new Array(5)
+    const nc = z.length
 
     const z0 = z[0]
     const znc1 = z[nc - 1]

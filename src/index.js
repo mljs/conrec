@@ -82,7 +82,6 @@ export class Conrec {
       this.matrix,
       this.xs,
       this.ys,
-      levels.length,
       levels,
     );
     return contourDrawer.getContour();
