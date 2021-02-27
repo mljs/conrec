@@ -1,5 +1,7 @@
 // https://github.com/jasondavies/conrec.js
 
+// Changes have been done by MLJS team
+
 /**
  * Copyright (c) 2010, Jason Davies.
  *
@@ -79,10 +81,6 @@ const MINUSEPSILON = 0 - EPSILON;
 export class ConrecLib {
   constructor(drawContour, timeout) {
     this.drawContour = drawContour;
-    this.h = new Array(5);
-    this.sh = new Array(5);
-    this.xh = new Array(5);
-    this.yh = new Array(5);
     this.timeout = timeout;
   }
   /**
@@ -97,8 +95,7 @@ export class ConrecLib {
    * increasing value.
    *
    * @private
-   * @param {number[][]} d - matrix of data to contour
-   * @param {number} ilb,iub,jlb,jub - index bounds of data matrix
+   * @param {number[][]} matrix - matrix of data to contour
    *
    *             The following two, one dimensional arrays (x and y) contain
    *             the horizontal and vertical coordinates of each sample points.
@@ -106,12 +103,18 @@ export class ConrecLib {
    * @param {number[]} y  - data matrix row coordinates
    * @param {number} nc   - number of contour levels
    * @param {number[]} z  - contour levels in increasing order.
+   * @param {object} [options={}]
+   * @param {number} [options.ilb] - index bounds of data matrix
+   * @param {number} [options.iub] - index bounds of data matrix
+   * @param {number} [options.jlb] - index bounds of data matrix
+   * @param {number} [options.jub] - index bounds of data matrix
    */
-  contour(d, ilb, iub, jlb, jub, x, y, nc, z) {
-    const h = this.h;
-    const sh = this.sh;
-    const xh = this.xh;
-    const yh = this.yh;
+  contour(matrix, x, y, nc, z, options = {}) {
+    const { ilb = 0, iub = matrix.length - 1, jlb = 0, jub = matrix[0].length - 1 } = options
+    const h = new Array(5)
+    const sh = new Array(5)
+    const xh = new Array(5)
+    const yh = new Array(5)
 
     const z0 = z[0]
     const znc1 = z[nc - 1]
@@ -147,6 +150,7 @@ export class ConrecLib {
       [[0, 3, 4], [1, 3, 1], [4, 3, 0]],
       [[9, 6, 7], [5, 2, 0], [8, 0, 0]]
     ];
+
     for (let j = jub - 1; j >= jlb; j--) {
       if (timeout && Date.now() - start > timeout) {
         throw new Error(
@@ -154,10 +158,10 @@ export class ConrecLib {
         );
       }
       for (let i = ilb; i <= iub - 1; i++) {
-        let dij = d[i][j]
-        let dij1 = d[i][j + 1]
-        let di1j = d[i + 1][j]
-        let di1j1 = d[i + 1][j + 1]
+        let dij = matrix[i][j]
+        let dij1 = matrix[i][j + 1]
+        let di1j = matrix[i + 1][j]
+        let di1j1 = matrix[i + 1][j + 1]
         let min1, min2, max1, max2
         if (dij > dij1) {
           min1 = dij1
@@ -182,7 +186,7 @@ export class ConrecLib {
                 if (m > 0) {
                   // The indexing of im and jm should be noted as it has to
                   // start from zero
-                  h[m] = d[i + im[m - 1]][j + jm[m - 1]] - z[k];
+                  h[m] = matrix[i + im[m - 1]][j + jm[m - 1]] - z[k];
                   xh[m] = x[i + im[m - 1]];
                   yh[m] = y[j + jm[m - 1]];
                 } else {

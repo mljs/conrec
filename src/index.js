@@ -80,10 +80,6 @@ export class Conrec {
     );
     conrec.contour(
       this.matrix,
-      0,
-      this.rows - 1,
-      0,
-      this.columns - 1,
       this.xs,
       this.ys,
       levels.length,
