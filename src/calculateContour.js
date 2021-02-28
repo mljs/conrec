@@ -90,9 +90,9 @@ const MINUSEPSILON = 0 - EPSILON;
  * @param {number[]} x  - data matrix column coordinates
  * @param {number[]} y  - data matrix row coordinates
  * @param {number[]} z  - contour levels in increasing order.
-* @param {object} contourDrawer object that implements contourDraw for drawing contour.  Defaults to a
-*                               custom "contour builder", which populates the
-*                               contours property.
+ * @param {object} contourDrawer object that implements contourDraw for drawing contour.  Defaults to a
+ *                               custom "contour builder", which populates the
+ *                               contours property.
  * @param {object} [options={}]
  * @param {number} [options.ilb] - index bounds of data matrix
  * @param {number} [options.iub] - index bounds of data matrix
@@ -100,14 +100,20 @@ const MINUSEPSILON = 0 - EPSILON;
  * @param {number} [options.jub] - index bounds of data matrix
  */
 export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
-  const { timeout, ilb = 0, iub = matrix.length - 1, jlb = 0, jub = matrix[0].length - 1 } = options
-  const h = new Array(5)
-  const sh = new Array(5)
-  const xh = new Array(5)
-  const yh = new Array(5)
-  const nc = z.length
-  const z0 = z[0]
-  const znc1 = z[nc - 1]
+  const {
+    timeout,
+    ilb = 0,
+    iub = matrix.length - 1,
+    jlb = 0,
+    jub = matrix[0].length - 1,
+  } = options;
+  const h = new Array(5);
+  const sh = new Array(5);
+  const xh = new Array(5);
+  const yh = new Array(5);
+  const nc = z.length;
+  const z0 = z[0];
+  const znc1 = z[nc - 1];
 
   const start = Date.now();
   /** private */
@@ -117,14 +123,13 @@ export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
   function ysect(p1, p2) {
     return (h[p2] * yh[p1] - h[p1] * yh[p2]) / (h[p2] - h[p1]);
   }
-  var m1;
-  var m2;
-  var m3;
-  var case_value;
-  var x1 = 0.0;
-  var x2 = 0.0;
-  var y1 = 0.0;
-  var y2 = 0.0;
+  let m1;
+  let m2;
+  let m3;
+  let x1 = 0.0;
+  let x2 = 0.0;
+  let y1 = 0.0;
+  let y2 = 0.0;
 
   // The indexing of im and jm should be noted as it has to start from zero
   // unlike the fortran counter part
@@ -134,39 +139,52 @@ export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
   // Fortran and C/C++ arrays are transposed of each other, in this case
   // it is more tricky as castab is in 3 dimensions
   const castab = [
-    [[0, 0, 8], [0, 2, 5], [7, 6, 9]],
-    [[0, 3, 4], [1, 3, 1], [4, 3, 0]],
-    [[9, 6, 7], [5, 2, 0], [8, 0, 0]]
+    [
+      [0, 0, 8],
+      [0, 2, 5],
+      [7, 6, 9],
+    ],
+    [
+      [0, 3, 4],
+      [1, 3, 1],
+      [4, 3, 0],
+    ],
+    [
+      [9, 6, 7],
+      [5, 2, 0],
+      [8, 0, 0],
+    ],
   ];
 
+  //  for (let j = jlb; j < jub; j++) {
   for (let j = jub - 1; j >= jlb; j--) {
     if (timeout && Date.now() - start > timeout) {
       throw new Error(
-        `timeout: contour generation could not finish in less than ${timeout}ms`
+        `timeout: contour generation could not finish in less than ${timeout}ms`,
       );
     }
-    for (let i = ilb; i <= iub - 1; i++) {
-      let dij = matrix[i][j]
-      let dij1 = matrix[i][j + 1]
-      let di1j = matrix[i + 1][j]
-      let di1j1 = matrix[i + 1][j + 1]
-      let min1, min2, max1, max2
+    for (let i = ilb; i < iub; i++) {
+      let dij = matrix[i][j];
+      let dij1 = matrix[i][j + 1];
+      let di1j = matrix[i + 1][j];
+      let di1j1 = matrix[i + 1][j + 1];
+      let min1, min2, max1, max2;
       if (dij > dij1) {
-        min1 = dij1
-        max1 = dij
+        min1 = dij1;
+        max1 = dij;
       } else {
-        min1 = dij
-        max1 = dij1
+        min1 = dij;
+        max1 = dij1;
       }
       if (di1j > di1j1) {
-        min2 = di1j1
-        max2 = di1j
+        min2 = di1j1;
+        max2 = di1j;
       } else {
-        min2 = di1j
-        max2 = di1j1
+        min2 = di1j;
+        max2 = di1j1;
       }
-      let dmin = min1 > min2 ? min2 : min1 // Math.min(temp1, temp2);
-      let dmax = max1 > max2 ? max1 : max2 // Math.max(temp1, temp2);
+      let dmin = min1 > min2 ? min2 : min1; // Math.min(temp1, temp2);
+      let dmax = max1 > max2 ? max1 : max2; // Math.max(temp1, temp2);
       if (dmax >= z0 && dmin <= znc1) {
         for (let k = 0; k < nc; k++) {
           if (z[k] >= dmin && z[k] <= dmax) {
@@ -223,14 +241,14 @@ export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
             for (let m = 1; m <= 4; m++) {
               m1 = m;
               m2 = 0;
-              if (m != 4) {
+              if (m !== 4) {
                 m3 = m + 1;
               } else {
                 m3 = 1;
               }
-              case_value = castab[sh[m1] + 1][sh[m2] + 1][sh[m3] + 1];
-              if (case_value != 0) {
-                switch (case_value) {
+              let caseValue = castab[sh[m1] + 1][sh[m2] + 1][sh[m3] + 1];
+              if (caseValue !== 0) {
+                switch (caseValue) {
                   case 1: // Line between vertices 1 and 2
                     x1 = xh[m1];
                     y1 = yh[m1];

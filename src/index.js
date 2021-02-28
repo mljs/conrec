@@ -1,6 +1,6 @@
 import { BasicContourDrawer } from './BasicContourDrawer';
-import { calculateContour } from './calculateContour';
 import { ShapeContourDrawer } from './ShapeContourDrawer';
+import { calculateContour } from './calculateContour';
 
 const defaultOptions = {
   nbLevels: 10,
@@ -74,14 +74,9 @@ export class Conrec {
       throw new TypeError('contourDrawer must be a string');
     }
 
-    calculateContour(
-      this.matrix,
-      this.xs,
-      this.ys,
-      levels,
-      contourDrawer,
-      { timeout: options.timeout }
-    );
+    calculateContour(this.matrix, this.xs, this.ys, levels, contourDrawer, {
+      timeout: options.timeout,
+    });
     return contourDrawer.getContour();
   }
 

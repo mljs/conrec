@@ -31,7 +31,7 @@ console.time('shape');
 for (let i = 0; i < number; i++) {
   conrec.drawContour({
     contourDrawer: 'shape',
-    levels: [-1000000000, 1000000000],
+    levels: [-100000, 100000],
     timeout: 10000,
   });
 }
