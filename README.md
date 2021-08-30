@@ -1,7 +1,7 @@
 # conrec
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
+[![build status][ci-image]][ci-url]
 [![npm download][download-image]][download-url]
 
 JavaScript implementation of the CONREC contouring algorithm.
@@ -18,9 +18,9 @@ Based on the JS code from https://github.com/jasondavies/conrec.js.
 
 [MIT](./LICENSE)
 
-[npm-image]: https://img.shields.io/npm/v/ml-conrec.svg?style=flat-square
+[npm-image]: https://img.shields.io/npm/v/ml-conrec.svg
 [npm-url]: https://npmjs.org/package/ml-conrec
-[travis-image]: https://img.shields.io/travis/mljs/conrec/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/mljs/conrec
-[download-image]: https://img.shields.io/npm/dm/ml-conrec.svg?style=flat-square
+[ci-image]: https://github.com/mljs/conrec/workflows/Node.js%20CI/badge.svg?branch=master
+[ci-url]: https://github.com/mljs/conrec/actions?query=workflow%3A%22Node.js+CI%22
+[download-image]: https://img.shields.io/npm/dm/ml-conrec.svg
 [download-url]: https://npmjs.org/package/ml-conrec

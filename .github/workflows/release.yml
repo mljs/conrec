@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  NODE_VERSION: 14.x
+  NODE_VERSION: 16.x
 
 jobs:
   release-please:
@@ -31,7 +31,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - run: npm install
         if: ${{ steps.release.outputs.release_created }}
-      - run: npm publish  --access public
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_BOT_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
