@@ -2,13 +2,13 @@ declare module 'ml-conrec' {
   export interface ConrecOptions {
     xs?: number[];
     ys?: number[];
+    swapAxes?: boolean;
   }
 
   export interface ConrecContourOptionsNbLevels {
     nbLevels?: number;
     contourDrawer?: 'basic' | 'shape';
     timeout?: number;
-    swapAxes?: boolean;
   }
 
   export interface ConrecContourOptionsLevels {
