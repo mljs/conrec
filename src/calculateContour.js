@@ -183,8 +183,10 @@ export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
         min2 = di1j;
         max2 = di1j1;
       }
-      let dmin = min1 > min2 ? min2 : min1; // Math.min(temp1, temp2);
-      let dmax = max1 > max2 ? max1 : max2; // Math.max(temp1, temp2);
+      // let dmin = Math.min(min1, min2);
+      // let dmax = Math.max(max1, max2);
+      let dmin = min1 > min2 ? min2 : min1;
+      let dmax = max1 > max2 ? max1 : max2;
       if (dmax >= z0 && dmin <= znc1) {
         for (let k = 0; k < nc; k++) {
           if (z[k] >= dmin && z[k] <= dmax) {
