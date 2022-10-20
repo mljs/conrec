@@ -41,15 +41,21 @@ export class Conrec {
   }
 
   /**
+   * @typedef {Object} Output
+   * @property {any} contours
+   * @property {boolean} timeout - Whether contour generation had to stop early because it reached the timeout
+   */
+
+  /**
    *
    * @param {number[]} [options.levels]
    * @param {number} [options.nbLevels=10]
    * @param {string} [options.contourDrawer='basic'] - 'basic' or 'shape'
    * @param {number} [options.timeout=0]
-   * @return {any}
+   * @return {Output}
    */
   drawContour(options) {
-    options = Object.assign({}, defaultOptions, options);
+    options = { ...defaultOptions, ...options };
 
     let levels;
     if (options.levels) {
@@ -73,11 +79,18 @@ export class Conrec {
     } else {
       throw new TypeError('contourDrawer must be a string');
     }
+    const isTimeout = calculateContour(
+      this.matrix,
+      this.xs,
+      this.ys,
+      levels,
+      contourDrawer,
+      {
+        timeout: options.timeout,
+      },
+    );
 
-    calculateContour(this.matrix, this.xs, this.ys, levels, contourDrawer, {
-      timeout: options.timeout,
-    });
-    return contourDrawer.getContour();
+    return { contours: contourDrawer.getContour(), timeout: isTimeout };
   }
 
   _computeMinMax() {
