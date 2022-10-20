@@ -43,7 +43,7 @@ export class Conrec {
   /**
    * @typedef {Object} Output
    * @property {any} contours
-   * @property {boolean} timeout - Whether contour generation finishes in the specified timeout or not
+   * @property {boolean} timeout - Whether contour generation had to stop early because it reached the timeout
    */
 
   /**
