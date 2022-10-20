@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`conrec basic test auto select levels 1`] = `
-Array [
+[
   167.3376920421198,
   182.66230795788022,
   167,
@@ -38,7 +38,7 @@ Array [
 `;
 
 exports[`conrec basic test auto select levels with swapAxes 1`] = `
-Array [
+[
   182.66230795788022,
   167.3376920421198,
   182.4704966842604,
