@@ -99,6 +99,7 @@ const MINUSEPSILON = 0 - EPSILON;
  * @param {number} [options.iub] - index bounds of data matrix
  * @param {number} [options.jlb] - index bounds of data matrix
  * @param {number} [options.jub] - index bounds of data matrix
+ * @returns {boolean} - whether contour generation finishes in the specified timeout or not
  */
 export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
   const {
@@ -117,13 +118,16 @@ export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
   const znc1 = z[nc - 1];
 
   const start = Date.now();
+
   /** private */
   function xsect(p1, p2) {
     return (h[p2] * xh[p1] - h[p1] * xh[p2]) / (h[p2] - h[p1]);
   }
+
   function ysect(p1, p2) {
     return (h[p2] * yh[p1] - h[p1] * yh[p2]) / (h[p2] - h[p1]);
   }
+
   let m1;
   let m2;
   let m3;
@@ -160,9 +164,8 @@ export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
   //  for (let j = jlb; j < jub; j++) {
   for (let j = jub - 1; j >= jlb; j--) {
     if (timeout && Date.now() - start > timeout) {
-      throw new Error(
-        `timeout: contour generation could not finish in less than ${timeout}ms`,
-      );
+      // `timeout: contour generation could not finish in less than ${timeout}ms`
+      return true;
     }
     for (let i = ilb; i < iub; i++) {
       let dij = matrix[i][j];
@@ -319,4 +322,5 @@ export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
       }
     }
   }
+  return false;
 }
