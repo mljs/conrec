@@ -55,7 +55,7 @@ export class Conrec {
    * @return {Output}
    */
   drawContour(options) {
-    options = Object.assign({}, defaultOptions, options);
+    options = { ...defaultOptions, ...options };
 
     let levels;
     if (options.levels) {
