@@ -94,6 +94,7 @@ const MINUSEPSILON = 0 - EPSILON;
  *                               custom "contour builder", which populates the
  *                               contours property.
  * @param {object} [options={}]
+ * @param {number} [options.timeout] - maximum number of ms before returning from the function, default unlimited
  * @param {number} [options.ilb] - index bounds of data matrix
  * @param {number} [options.iub] - index bounds of data matrix
  * @param {number} [options.jlb] - index bounds of data matrix
