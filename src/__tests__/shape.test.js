@@ -11,10 +11,11 @@ describe('shape', () => {
     `);
 
     const conrec = new Conrec(matrix);
-    const { contours } = conrec.drawContour({
+    const { contours, timeout } = conrec.drawContour({
       contourDrawer: 'shape',
       levels: [0.5],
     });
+    expect(timeout).toBeFalsy();
     expect(contours[0]).toHaveLength(25);
   });
 
@@ -28,11 +29,12 @@ describe('shape', () => {
     `);
 
     const conrec = new Conrec(matrix);
-    const { contours } = conrec.drawContour({
+    const { contours, timeout } = conrec.drawContour({
       contourDrawer: 'shape',
       levels: [0.5],
     });
 
+    expect(timeout).toBeFalsy();
     expect(contours[0]).toHaveLength(25);
   });
 
@@ -49,11 +51,11 @@ describe('shape', () => {
     `);
 
     const conrec = new Conrec(matrix);
-    const { contours } = conrec.drawContour({
+    const { contours, timeout } = conrec.drawContour({
       contourDrawer: 'shape',
       levels: [0.5],
     });
-
+    expect(timeout).toBeFalsy();
     expect(contours[0]).toHaveLength(49);
   });
 });
