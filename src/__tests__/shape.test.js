@@ -11,11 +11,11 @@ describe('shape', () => {
     `);
 
     const conrec = new Conrec(matrix);
-    const shape = conrec.drawContour({
+    const { contours } = conrec.drawContour({
       contourDrawer: 'shape',
       levels: [0.5],
     });
-    expect(shape[0]).toHaveLength(25);
+    expect(contours[0]).toHaveLength(25);
   });
 
   it('2 squares', () => {
@@ -28,12 +28,12 @@ describe('shape', () => {
     `);
 
     const conrec = new Conrec(matrix);
-    const shape = conrec.drawContour({
+    const { contours } = conrec.drawContour({
       contourDrawer: 'shape',
       levels: [0.5],
     });
 
-    expect(shape[0]).toHaveLength(25);
+    expect(contours[0]).toHaveLength(25);
   });
 
   it('2 diagonal squares', () => {
@@ -49,12 +49,12 @@ describe('shape', () => {
     `);
 
     const conrec = new Conrec(matrix);
-    const shape = conrec.drawContour({
+    const { contours } = conrec.drawContour({
       contourDrawer: 'shape',
       levels: [0.5],
     });
 
-    expect(shape[0]).toHaveLength(49);
+    expect(contours[0]).toHaveLength(49);
   });
 });
 
