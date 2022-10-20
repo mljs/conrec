@@ -80,7 +80,6 @@ describe('conrec basic test', () => {
     expect(contours[0].lines).toHaveLength(0);
     expect(contours[1].lines.length).toBeLessThan(2000);
     expect(contours[8].lines).toHaveLength(0);
-    expect(contours[8].lines).toMatchSnapshot();
     expect(contours[9].lines).toHaveLength(0);
   });
 });
