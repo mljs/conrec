@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.0.0](https://github.com/mljs/conrec/compare/v3.2.1...v4.0.0) (2022-10-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* return an object instead of throw error when timeout exceeded (#13)
+
+### Code Refactoring
+
+* return an object instead of throw error when timeout exceeded ([#13](https://github.com/mljs/conrec/issues/13)) ([22df7d4](https://github.com/mljs/conrec/commit/22df7d4f6308714f78fc0e8a9264ae458bb8feb3))
+
 ### [3.2.1](https://www.github.com/mljs/conrec/compare/v3.2.0...v3.2.1) (2021-08-30)
 
 
@@ -66,7 +77,3 @@ behavior.
 
 <a name="0.0.2"></a>
 ## 0.0.2 (2016-07-12)
-
-
-
-
