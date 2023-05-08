@@ -5,10 +5,11 @@ import { convert } from 'jcampconverter';
 import { Conrec } from '..';
 
 const data = fs.readFileSync(`${__dirname}/data/zhmbc_0.jdx`, 'utf8');
-const parsed = convert(data, { noContour: true }).flatten[0];
+const parsed: any = convert(data, { noContour: true }).flatten[0];
+const matrix: number[][] = parsed.minMax.z || [];
 describe('conrec basic test', () => {
   it('no result because level too far', () => {
-    const conrec = new Conrec(parsed.minMax.z);
+    const conrec = new Conrec(matrix);
     const { contours, timeout } = conrec.drawContour({
       contourDrawer: 'basic',
       levels: [-1000000000, 1000000000],
@@ -22,7 +23,7 @@ describe('conrec basic test', () => {
   });
 
   it('2 specified levels', () => {
-    const conrec = new Conrec(parsed.minMax.z);
+    const conrec = new Conrec(matrix);
     const { contours, timeout } = conrec.drawContour({
       contourDrawer: 'basic',
       levels: [-100000, 100000],
@@ -35,7 +36,7 @@ describe('conrec basic test', () => {
   });
 
   it('auto select levels', () => {
-    const conrec = new Conrec(parsed.minMax.z);
+    const conrec = new Conrec(matrix);
     const { contours, timeout } = conrec.drawContour({
       contourDrawer: 'basic',
       nbLevels: 10,
@@ -52,7 +53,7 @@ describe('conrec basic test', () => {
   });
 
   it('auto select levels with swapAxes', () => {
-    const conrec = new Conrec(parsed.minMax.z, { swapAxes: true });
+    const conrec = new Conrec(matrix, { swapAxes: true });
     const { contours, timeout } = conrec.drawContour({
       contourDrawer: 'basic',
       nbLevels: 10,
@@ -69,7 +70,7 @@ describe('conrec basic test', () => {
   });
 
   it('return available contours within 100ms', () => {
-    const conrec = new Conrec(parsed.minMax.z);
+    const conrec = new Conrec(matrix);
     const { contours, timeout } = conrec.drawContour({
       contourDrawer: 'basic',
       nbLevels: 10,

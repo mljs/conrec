@@ -129,12 +129,15 @@
  * MODIFICATIONS.
  */
 export class ContourBuilder {
-  constructor(level) {
+  level: number[];
+  s: Sequence | null;
+  private count: number;
+  constructor(level: number[]) {
     this.level = level;
     this.s = null;
     this.count = 0;
   }
-  removeSeq(list) {
+  removeSeq(list: Sequence) {
     // if list is the first item, static ptr s is updated
     if (list.prev) {
       list.prev.next = list.next;
@@ -146,10 +149,10 @@ export class ContourBuilder {
     }
     --this.count;
   }
-  addSegment(a, b) {
+  addSegment(a: Point, b: Point) {
     let ss = this.s;
-    let ma = null;
-    let mb = null;
+    let ma: Sequence | null = null;
+    let mb: Sequence | null = null;
     let prependA = false;
     let prependB = false;
     while (ss) {
@@ -178,71 +181,61 @@ export class ContourBuilder {
         ss = ss.next;
       }
     }
-    // c is the case selector based on which of ma and/or mb are set
-    let c = (ma !== null ? 1 : 0) | (mb !== null ? 2 : 0);
-    let pp;
-    switch (c) {
-      case 0: {
-        // both unmatched, add as new sequence
-        let aa = { p: a, prev: null };
-        let bb = { p: b, next: null };
-        aa.next = bb;
-        bb.prev = aa;
-        // create sequence element and push onto head of main list. The order
-        // of items in this list is unimportant
-        ma = { head: aa, tail: bb, next: this.s, prev: null, closed: false };
-        if (this.s) {
-          this.s.prev = ma;
-        }
-        this.s = ma;
-        ++this.count; // not essential - tracks number of unmerged sequences
-        break;
+    if (ma === null && mb === null) {
+      // both unmatched, add as new sequence
+      let aa: SequenceNode = { p: a, prev: null, next: null };
+      let bb: SequenceNode = { p: b, prev: null, next: null };
+      aa.next = bb;
+      bb.prev = aa;
+      // create sequence element and push onto head of main list. The order
+      // of items in this list is unimportant
+      ma = { head: aa, tail: bb, next: this.s, prev: null, closed: false };
+      if (this.s) {
+        this.s.prev = ma;
       }
-      case 1: {
-        // a matched, b did not - thus b extends sequence ma
-        pp = { p: b };
-        if (prependA) {
-          pp.next = ma.head;
-          pp.prev = null;
-          ma.head.prev = pp;
-          ma.head = pp;
-        } else {
-          pp.next = null;
-          pp.prev = ma.tail;
-          ma.tail.next = pp;
-          ma.tail = pp;
-        }
-        break;
+      this.s = ma;
+      ++this.count; // not essential - tracks number of unmerged sequences
+    } else if (ma !== null && mb === null) {
+      // a matched, b did not - thus b extends sequence ma
+      const pp: SequenceNode = { p: b, next: null, prev: null };
+      if (prependA) {
+        pp.next = ma.head;
+        pp.prev = null;
+        ma.head.prev = pp;
+        ma.head = pp;
+      } else {
+        pp.next = null;
+        pp.prev = ma.tail;
+        ma.tail.next = pp;
+        ma.tail = pp;
       }
-      case 2: {
-        // b matched, a did not - thus a extends sequence mb
-        pp = { p: a };
-        if (prependB) {
-          pp.next = mb.head;
-          pp.prev = null;
-          mb.head.prev = pp;
-          mb.head = pp;
-        } else {
-          pp.next = null;
-          pp.prev = mb.tail;
-          mb.tail.next = pp;
-          mb.tail = pp;
-        }
-        break;
+    } else if (ma === null && mb !== null) {
+      // b matched, a did not - thus a extends sequence mb
+      const pp: SequenceNode = { p: a, next: null, prev: null };
+      if (prependB) {
+        pp.next = mb.head;
+        pp.prev = null;
+        mb.head.prev = pp;
+        mb.head = pp;
+      } else {
+        pp.next = null;
+        pp.prev = mb.tail;
+        mb.tail.next = pp;
+        mb.tail = pp;
       }
-      case 3: {
-        // both matched, can merge sequences
-        // if the sequences are the same, do nothing, as we are simply closing this path (could set a flag)
-        if (ma === mb) {
-          pp = { p: ma.tail.p, next: ma.head, prev: null };
-          ma.head.prev = pp;
-          ma.head = pp;
-          ma.closed = true;
-          break;
-        }
-        // there are 4 ways the sequence pair can be joined. The current setting of prependA and
-        // prependB will tell us which type of join is needed. For head/head and tail/tail joins
-        // one sequence needs to be reversed
+    } else if (ma !== null && mb !== null) {
+      // both matched, can merge sequences
+      // if the sequences are the same, do nothing, as we are simply closing this path (could set a flag)
+      if (ma === mb) {
+        const pp: SequenceNode = { p: ma.tail.p, next: ma.head, prev: null };
+        ma.head.prev = pp;
+        ma.head = pp;
+        ma.closed = true;
+      }
+      // there are 4 ways the sequence pair can be joined. The current setting of prependA and
+      // prependB will tell us which type of join is needed. For head/head and tail/tail joins
+      // one sequence needs to be reversed
+      else {
         switch ((prependA ? 1 : 0) | (prependB ? 2 : 0)) {
           case 0: // tail-tail
             // reverse ma and append to mb
@@ -271,21 +264,20 @@ export class ContourBuilder {
           default:
             throw new Error('UNREACHABLE');
         }
-        break;
       }
-      default:
-        throw new Error('UNREACHABLE');
+    } else {
+      throw new Error('UNREACHABLE');
     }
   }
 }
 
-function pointsEqual(a, b) {
+function pointsEqual(a: Point, b: Point) {
   let x = a.x - b.x;
   let y = a.y - b.y;
   return x * x + y * y < Number.EPSILON;
 }
 
-function reverseList(list) {
+function reverseList(list: Sequence) {
   let pp = list.head;
   let temp;
   while (pp) {
@@ -303,3 +295,20 @@ function reverseList(list) {
   list.head = list.tail;
   list.tail = temp;
 }
+export interface Point {
+  x: number;
+  y: number;
+}
+export type SequenceNode = {
+  p: Point;
+  next: SequenceNode | null;
+  prev: SequenceNode | null;
+};
+
+type Sequence = {
+  head: SequenceNode;
+  tail: SequenceNode;
+  next: Sequence | null;
+  prev: Sequence | null;
+  closed: boolean;
+};

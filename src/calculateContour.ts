@@ -1,4 +1,7 @@
 // https://github.com/jasondavies/conrec.js
+import { NumberArray, NumberMatrix } from 'cheminfo-types';
+
+import { ContourDrawer } from '.';
 
 // Changes have been done by MLJS team
 
@@ -71,6 +74,14 @@
 const EPSILON = Number.EPSILON;
 const MINUSEPSILON = 0 - EPSILON;
 
+interface CalculateContourOptions {
+  timeout?: number;
+  ilb?: number;
+  iub?: number;
+  jlb?: number;
+  jub?: number;
+}
+
 /**
  * contour is a contouring subroutine for rectangularily spaced data
  *
@@ -83,13 +94,13 @@ const MINUSEPSILON = 0 - EPSILON;
  * increasing value.
  *
  * @private
- * @param {number[][]} matrix - matrix of data to contour
+ * @param {NumberMatrix} matrix - matrix of data to contour
  *
  *             The following two, one dimensional arrays (x and y) contain
  *             the horizontal and vertical coordinates of each sample points.
- * @param {number[]} x  - data matrix column coordinates
- * @param {number[]} y  - data matrix row coordinates
- * @param {number[]} z  - contour levels in increasing order.
+ * @param {NumberArray} x  - data matrix column coordinates
+ * @param {NumberArray} y  - data matrix row coordinates
+ * @param {NumberArray} z  - contour levels in increasing order.
  * @param {object} contourDrawer object that implements contourDraw for drawing contour.  Defaults to a
  *                               custom "contour builder", which populates the
  *                               contours property.
@@ -101,7 +112,14 @@ const MINUSEPSILON = 0 - EPSILON;
  * @param {number} [options.jub] - index bounds of data matrix
  * @returns {boolean} - Whether contour generation had to stop early because it reached the timeout
  */
-export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
+export function calculateContour(
+  matrix: NumberMatrix,
+  x: NumberArray,
+  y: NumberArray,
+  z: NumberArray,
+  contourDrawer: ContourDrawer,
+  options: CalculateContourOptions = {},
+) {
   const {
     timeout,
     ilb = 0,
@@ -109,10 +127,10 @@ export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
     jlb = 0,
     jub = matrix[0].length - 1,
   } = options;
-  const h = new Array(5);
-  const sh = new Array(5);
-  const xh = new Array(5);
-  const yh = new Array(5);
+  const h = new Array<number>(5);
+  const sh = new Array<number>(5);
+  const xh = new Array<number>(5);
+  const yh = new Array<number>(5);
   const nc = z.length;
   const z0 = z[0];
   const znc1 = z[nc - 1];
@@ -120,11 +138,11 @@ export function calculateContour(matrix, x, y, z, contourDrawer, options = {}) {
   const start = Date.now();
 
   /** private */
-  function xsect(p1, p2) {
+  function xsect(p1: number, p2: number) {
     return (h[p2] * xh[p1] - h[p1] * xh[p2]) / (h[p2] - h[p1]);
   }
 
-  function ysect(p1, p2) {
+  function ysect(p1: number, p2: number) {
     return (h[p2] * yh[p1] - h[p1] * yh[p2]) / (h[p2] - h[p1]);
   }
 
