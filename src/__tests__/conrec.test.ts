@@ -5,8 +5,8 @@ import { convert } from 'jcampconverter';
 import { Conrec } from '..';
 
 const data = fs.readFileSync(`${__dirname}/data/zhmbc_0.jdx`, 'utf8');
-const parsed: any = convert(data, { noContour: true }).flatten[0];
-const matrix: number[][] = parsed.minMax.z || [];
+const parsed = convert(data, { noContour: true }).flatten[0];
+const matrix: number[][] = parsed.minMax?.z || [];
 describe('conrec basic test', () => {
   it('no result because level too far', () => {
     const conrec = new Conrec(matrix);

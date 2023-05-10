@@ -53,7 +53,7 @@
     "eslint": "^8.38.0",
     "eslint-config-cheminfo-typescript": "^11.3.1",
     "esm": "^3.2.25",
-    "jcampconverter": "^9.1.0",
+    "jcampconverter": "^9.1.1",
     "jest": "^29.5.0",
     "prettier": "^2.8.7",
     "rimraf": "^5.0.0",
