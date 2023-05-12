@@ -1,6 +1,6 @@
 {
   "name": "ml-conrec",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "JavaScript implementation of the CONREC contouring algorithm",
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",
