@@ -30,3 +30,5 @@ node_modules
 .idea
 
 conrec.js
+lib-esm
+lib

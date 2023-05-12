@@ -16,7 +16,7 @@ describe('shape', () => {
       levels: [0.5],
     });
     expect(timeout).toBeFalsy();
-    expect(contours[0]).toHaveLength(25);
+    expect(contours[0].lines).toHaveLength(25);
   });
 
   it('2 squares', () => {
@@ -35,7 +35,7 @@ describe('shape', () => {
     });
 
     expect(timeout).toBeFalsy();
-    expect(contours[0]).toHaveLength(25);
+    expect(contours[0].lines).toHaveLength(25);
   });
 
   it('2 diagonal squares', () => {
@@ -56,19 +56,19 @@ describe('shape', () => {
       levels: [0.5],
     });
     expect(timeout).toBeFalsy();
-    expect(contours[0]).toHaveLength(49);
+    expect(contours[0].lines).toHaveLength(49);
   });
 });
 
-function parse(string) {
-  let lines = string
+function parse(string: string) {
+  const lines = string
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter((line) => line);
 
-  let matrix = [];
+  const matrix: number[][] = [];
   for (let line of lines) {
-    matrix.push(line.split('').map((value) => parseInt(value)));
+    matrix.push(line.split('').map((value: string) => parseInt(value, 10)));
   }
   return matrix;
 }

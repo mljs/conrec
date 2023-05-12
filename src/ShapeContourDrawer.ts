@@ -66,18 +66,34 @@
  * MODIFICATIONS.
  */
 
-import { ContourBuilder } from './ContourBuilder';
+import { ContourBuilder, Point, SequenceNode } from './ContourBuilder';
+
+export interface ShapeContour {
+  level: number[];
+  k: number;
+  lines: Point[];
+}
 
 export class ShapeContourDrawer {
+  private contours: ContourBuilder[];
+  private swapAxes: boolean;
+
   constructor(levels, swapAxes) {
-    this.contours = new Array(levels.length);
+    this.contours = new Array<ContourBuilder>(levels.length);
     for (let i = 0; i < levels.length; i++) {
       this.contours[i] = new ContourBuilder(levels[i]);
     }
     this.swapAxes = swapAxes;
   }
 
-  drawContour(x1, y1, x2, y2, z, k) {
+  drawContour(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    z: number,
+    k: number,
+  ) {
     if (!this.swapAxes) {
       this.contours[k].addSegment({ x: y1, y: x1 }, { x: y2, y: x2 });
     } else {
@@ -86,18 +102,16 @@ export class ShapeContourDrawer {
   }
 
   getContour() {
-    let l = [];
+    let l: ShapeContour[] = [];
     let a = this.contours;
     for (let k = 0; k < a.length; k++) {
       let s = a[k].s;
       let level = a[k].level;
       while (s) {
-        let h = s.head;
-        let l2 = [];
-        l2.level = level;
-        l2.k = k;
-        while (h && h.p) {
-          l2.push(h.p);
+        let h: SequenceNode | null = s.head;
+        const l2: ShapeContour = { lines: [], level, k };
+        while (h?.p) {
+          l2.lines.push(h.p);
           h = h.next;
         }
         l.push(l2);
