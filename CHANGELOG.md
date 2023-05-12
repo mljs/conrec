@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.0.0](https://github.com/mljs/conrec/compare/v4.0.0...v5.0.0) (2023-05-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* The contour lines are now returned in an object instead of an array with additional properties.
+
+### Code Refactoring
+
+* migrate project to TypeScript ([#17](https://github.com/mljs/conrec/issues/17)) ([3547522](https://github.com/mljs/conrec/commit/35475226cfec8708f855957a9bede77b886c0402))
+
 ## [4.0.0](https://github.com/mljs/conrec/compare/v3.2.1...v4.0.0) (2022-10-20)
 
 
