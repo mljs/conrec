@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1](https://github.com/mljs/conrec/compare/v5.0.0...v5.0.1) (2023-05-18)
+
+
+### Bug Fixes
+
+* **types:** improve typings and allow typed arrays as inputs ([0e1a4c9](https://github.com/mljs/conrec/commit/0e1a4c9b328e8454248d58646ca6eddf37233984))
+
 ## [5.0.0](https://github.com/mljs/conrec/compare/v4.0.0...v5.0.0) (2023-05-12)
 
 
