@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.2](https://github.com/mljs/conrec/compare/v5.0.1...v5.0.2) (2023-05-18)
+
+
+### Bug Fixes
+
+* **types:** make return type of drawContour depend on contourDrawer ([#20](https://github.com/mljs/conrec/issues/20)) ([2471669](https://github.com/mljs/conrec/commit/24716692dd36c0dc6f7aafc8d87da069563e266e))
+
 ## [5.0.1](https://github.com/mljs/conrec/compare/v5.0.0...v5.0.1) (2023-05-18)
 
 
