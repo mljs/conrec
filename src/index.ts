@@ -12,6 +12,16 @@ interface ConrecOptions {
 
 export type ContourDrawer = BasicContourDrawer | ShapeContourDrawer;
 
+export type ContourDrawerName = 'basic' | 'shape';
+
+type ContourDrawerByName<DrawerName extends ContourDrawerName> =
+  DrawerName extends 'basic' ? BasicContourDrawer : ShapeContourDrawer;
+
+export type DrawContourResult<DrawerName extends ContourDrawerName> = {
+  contours: ReturnType<ContourDrawerByName<DrawerName>['getContour']>;
+  timeout: boolean;
+};
+
 export class Conrec {
   matrix: Readonly<NumberMatrix>;
   rows: number;
@@ -47,12 +57,12 @@ export class Conrec {
     this.max = 0;
   }
 
-  drawContour(options: {
+  drawContour<DrawerName extends ContourDrawerName>(options: {
     levels?: readonly number[];
     nbLevels?: number;
-    contourDrawer?: 'basic' | 'shape';
+    contourDrawer?: DrawerName;
     timeout?: number;
-  }) {
+  }): DrawContourResult<DrawerName> {
     const { nbLevels = 10, timeout = 0, contourDrawer = 'basic' } = options;
 
     let levels: number[];
@@ -87,7 +97,12 @@ export class Conrec {
       },
     );
 
-    return { contours: contourDrawerInstance.getContour(), timeout: isTimeout };
+    return {
+      contours: contourDrawerInstance.getContour() as ReturnType<
+        ContourDrawerByName<DrawerName>['getContour']
+      >,
+      timeout: isTimeout,
+    };
   }
 
   _computeMinMax() {
