@@ -75,6 +75,9 @@ const EPSILON = Number.EPSILON;
 const MINUSEPSILON = 0 - EPSILON;
 
 interface CalculateContourOptions {
+  /**
+   * Maximum number of ms before returning from the function, default unlimited.
+   */
   timeout?: number;
   ilb?: number;
   iub?: number;
@@ -94,32 +97,26 @@ interface CalculateContourOptions {
  * increasing value.
  *
  * @private
- * @param {NumberMatrix} matrix - matrix of data to contour
+ * @param matrix - matrix of data to contour
  *
  *             The following two, one dimensional arrays (x and y) contain
  *             the horizontal and vertical coordinates of each sample points.
- * @param {NumberArray} x  - data matrix column coordinates
- * @param {NumberArray} y  - data matrix row coordinates
- * @param {NumberArray} z  - contour levels in increasing order.
- * @param {object} contourDrawer object that implements contourDraw for drawing contour.  Defaults to a
+ * @param x  - data matrix column coordinates
+ * @param y  - data matrix row coordinates
+ * @param z  - contour levels in increasing order.
+ * @param contourDrawer object that implements contourDraw for drawing contour.  Defaults to a
  *                               custom "contour builder", which populates the
  *                               contours property.
- * @param {object} [options={}]
- * @param {number} [options.timeout] - maximum number of ms before returning from the function, default unlimited
- * @param {number} [options.ilb] - index bounds of data matrix
- * @param {number} [options.iub] - index bounds of data matrix
- * @param {number} [options.jlb] - index bounds of data matrix
- * @param {number} [options.jub] - index bounds of data matrix
- * @returns {boolean} - Whether contour generation had to stop early because it reached the timeout
+ * @returns Whether contour generation had to stop early because it reached the timeout
  */
 export function calculateContour(
-  matrix: NumberMatrix,
-  x: NumberArray,
-  y: NumberArray,
-  z: NumberArray,
+  matrix: Readonly<NumberMatrix>,
+  x: Readonly<NumberArray>,
+  y: Readonly<NumberArray>,
+  z: Readonly<NumberArray>,
   contourDrawer: ContourDrawer,
   options: CalculateContourOptions = {},
-) {
+): boolean {
   const {
     timeout,
     ilb = 0,

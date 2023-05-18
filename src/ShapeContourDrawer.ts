@@ -69,7 +69,7 @@
 import { ContourBuilder, Point, SequenceNode } from './ContourBuilder';
 
 export interface ShapeContour {
-  level: number[];
+  level: number;
   k: number;
   lines: Point[];
 }
@@ -78,7 +78,7 @@ export class ShapeContourDrawer {
   private contours: ContourBuilder[];
   private swapAxes: boolean;
 
-  constructor(levels, swapAxes) {
+  constructor(levels: number[], swapAxes: boolean) {
     this.contours = new Array<ContourBuilder>(levels.length);
     for (let i = 0; i < levels.length; i++) {
       this.contours[i] = new ContourBuilder(levels[i]);

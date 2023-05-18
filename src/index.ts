@@ -1,37 +1,29 @@
+import { NumberArray, NumberMatrix } from 'cheminfo-types';
+
 import { BasicContourDrawer } from './BasicContourDrawer';
 import { ShapeContourDrawer } from './ShapeContourDrawer';
 import { calculateContour } from './calculateContour';
 
-const defaultOptions = {
-  nbLevels: 10,
-  timeout: 0,
-};
 interface ConrecOptions {
-  xs?: number[];
-  ys?: number[];
+  xs?: Readonly<NumberArray>;
+  ys?: Readonly<NumberArray>;
   swapAxes?: boolean;
 }
+
 export type ContourDrawer = BasicContourDrawer | ShapeContourDrawer;
-/**
- *
- * @class Conrec
- * @param {number[][]} matrix
- * @param {number[]} [options.xs]
- * @param {number[]} [options.ys]
- * @param {boolean} [options.swapAxes]
- */
+
 export class Conrec {
-  matrix: number[][];
+  matrix: Readonly<NumberMatrix>;
   rows: number;
   columns: number;
-  xs: number[];
-  ys: number[];
+  xs: Readonly<NumberArray>;
+  ys: Readonly<NumberArray>;
   swapAxes: boolean;
   hasMinMax: boolean;
   min: number;
   max: number;
 
-  constructor(matrix: number[][], options: ConrecOptions = {}) {
+  constructor(matrix: Readonly<NumberMatrix>, options: ConrecOptions = {}) {
     const { swapAxes = false } = options;
     this.matrix = matrix;
     this.rows = matrix.length;
@@ -55,46 +47,31 @@ export class Conrec {
     this.max = 0;
   }
 
-  /**
-   * @typedef {Object} Output
-   * @property {any} contours
-   * @property {boolean} timeout - Whether contour generation had to stop early because it reached the timeout
-   */
-
-  /**
-   *
-   * @param {number[]} [options.levels]
-   * @param {number} [options.nbLevels=10]
-   * @param {string} [options.contourDrawer='basic'] - 'basic' or 'shape'
-   * @param {number} [options.timeout=0]
-   * @return {Output}
-   */
   drawContour(options: {
-    levels?: number[];
+    levels?: readonly number[];
     nbLevels?: number;
-    contourDrawer?: string;
+    contourDrawer?: 'basic' | 'shape';
     timeout?: number;
   }) {
-    const { nbLevels, timeout } = { ...defaultOptions, ...options };
+    const { nbLevels = 10, timeout = 0, contourDrawer = 'basic' } = options;
 
     let levels: number[];
     if (options.levels) {
-      levels = options.levels.slice();
+      levels = [...options.levels];
     } else {
       this._computeMinMax();
       const interval = (this.max - this.min) / (nbLevels - 1);
       levels = range(this.min, this.max + interval, interval);
     }
     levels.sort((a, b) => a - b);
-    let contourDrawer: ContourDrawer | null = null;
-    const contourDrawerType = options.contourDrawer || 'basic';
-    if (typeof contourDrawerType === 'string') {
-      if (contourDrawerType === 'basic') {
-        contourDrawer = new BasicContourDrawer(levels, this.swapAxes);
-      } else if (contourDrawerType === 'shape') {
-        contourDrawer = new ShapeContourDrawer(levels, this.swapAxes);
+    let contourDrawerInstance: ContourDrawer;
+    if (typeof contourDrawer === 'string') {
+      if (contourDrawer === 'basic') {
+        contourDrawerInstance = new BasicContourDrawer(levels, this.swapAxes);
+      } else if (contourDrawer === 'shape') {
+        contourDrawerInstance = new ShapeContourDrawer(levels, this.swapAxes);
       } else {
-        throw new Error(`unknown contour drawer: ${contourDrawerType}`);
+        throw new Error(`invalid contour drawer: ${String(contourDrawer)}`);
       }
     } else {
       throw new TypeError('contourDrawer must be a string');
@@ -104,13 +81,13 @@ export class Conrec {
       this.xs,
       this.ys,
       levels,
-      contourDrawer,
+      contourDrawerInstance,
       {
         timeout,
       },
     );
 
-    return { contours: contourDrawer.getContour(), timeout: isTimeout };
+    return { contours: contourDrawerInstance.getContour(), timeout: isTimeout };
   }
 
   _computeMinMax() {
@@ -123,13 +100,15 @@ export class Conrec {
   }
 }
 
-function range(from: number, to: number, step: number) {
+function range(from: number, to: number, step: number): number[] {
   const result: number[] = [];
-  for (let i = from; i < to; i += step) result.push(i);
+  for (let i = from; i < to; i += step) {
+    result.push(i);
+  }
   return result;
 }
 
-function minMax(matrix: number[][]) {
+function minMax(matrix: Readonly<NumberMatrix>) {
   let min = Number.POSITIVE_INFINITY;
   let max = Number.NEGATIVE_INFINITY;
   for (const row of matrix) {

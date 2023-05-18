@@ -7,13 +7,13 @@ export class BasicContourDrawer {
   private contour: BasicContour[];
   private swapAxes: boolean;
 
-  constructor(levels: number[], swapAxes: boolean) {
-    this.contour = new Array(levels.length);
-    for (let i = 0; i < levels.length; i++) {
-      this.contour[i] = {
-        zValue: levels[i],
+  constructor(levels: Readonly<number[]>, swapAxes: boolean) {
+    this.contour = [];
+    for (const level of levels) {
+      this.contour.push({
+        zValue: level,
         lines: [],
-      };
+      });
     }
     this.swapAxes = swapAxes;
   }

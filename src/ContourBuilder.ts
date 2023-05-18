@@ -129,14 +129,16 @@
  * MODIFICATIONS.
  */
 export class ContourBuilder {
-  level: number[];
+  level: number;
   s: Sequence | null;
   private count: number;
-  constructor(level: number[]) {
+
+  constructor(level: number) {
     this.level = level;
     this.s = null;
     this.count = 0;
   }
+
   removeSeq(list: Sequence) {
     // if list is the first item, static ptr s is updated
     if (list.prev) {
@@ -149,6 +151,7 @@ export class ContourBuilder {
     }
     --this.count;
   }
+
   addSegment(a: Point, b: Point) {
     let ss = this.s;
     let ma: Sequence | null = null;
@@ -278,7 +281,7 @@ function pointsEqual(a: Point, b: Point) {
 }
 
 function reverseList(list: Sequence) {
-  let pp = list.head;
+  let pp: SequenceNode | null = list.head;
   let temp;
   while (pp) {
     // swap prev/next pointers
