@@ -158,6 +158,7 @@ export function calculateContour(
   // Note that castab is arranged differently from the FORTRAN code because
   // Fortran and C/C++ arrays are transposed of each other, in this case
   // it is more tricky as castab is in 3 dimensions
+  // accessing matrix does not seem to be a speed problem: https://jsbench.me/qolvz19dwb/1
   const castab = [
     [
       [0, 0, 8],
@@ -180,6 +181,7 @@ export function calculateContour(
   for (let j = jub - 1; j >= jlb; j--) {
     if (timeout && Date.now() - start > timeout) {
       // `timeout: contour generation could not finish in less than ${timeout}ms`
+      // no impact on speed
       return true;
     }
     for (let i = ilb; i < iub; i++) {
@@ -202,10 +204,11 @@ export function calculateContour(
         min2 = di1j;
         max2 = di1j1;
       }
-      // let dmin = Math.min(min1, min2);
-      // let dmax = Math.max(max1, max2);
-      let dmin = min1 > min2 ? min2 : min1;
-      let dmax = max1 > max2 ? max1 : max2;
+      let dmin = Math.min(min1, min2);
+      let dmax = Math.max(max1, max2);
+      // Ternary operator is now much slower: https://jsbench.me/d5l0dh502g
+      //let dmin = min1 > min2 ? min2 : min1;
+      //let dmax = max1 > max2 ? max1 : max2;
       if (dmax >= z0 && dmin <= znc1) {
         for (let k = 0; k < nc; k++) {
           if (z[k] >= dmin && z[k] <= dmax) {
@@ -329,6 +332,7 @@ export function calculateContour(
                 }
                 // Put your processing code here and comment out the printf
                 // printf("%f %f %f %f %f\n",x1,y1,x2,y2,z[k]);
+                // the following step takes negligibly  amount of time
                 contourDrawer.drawContour(x1, y1, x2, y2, z[k], k);
               }
             }
