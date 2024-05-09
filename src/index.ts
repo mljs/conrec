@@ -17,10 +17,10 @@ export type ContourDrawerName = 'basic' | 'shape';
 type ContourDrawerByName<DrawerName extends ContourDrawerName> =
   DrawerName extends 'basic' ? BasicContourDrawer : ShapeContourDrawer;
 
-export type DrawContourResult<DrawerName extends ContourDrawerName> = {
+export interface DrawContourResult<DrawerName extends ContourDrawerName> {
   contours: ReturnType<ContourDrawerByName<DrawerName>['getContour']>;
   timeout: boolean;
-};
+}
 
 export class Conrec {
   matrix: Readonly<NumberMatrix>;

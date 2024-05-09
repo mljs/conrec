@@ -186,8 +186,8 @@ export class ContourBuilder {
     }
     if (ma === null && mb === null) {
       // both unmatched, add as new sequence
-      let aa: SequenceNode = { p: a, prev: null, next: null };
-      let bb: SequenceNode = { p: b, prev: null, next: null };
+      const aa: SequenceNode = { p: a, prev: null, next: null };
+      const bb: SequenceNode = { p: b, prev: null, next: null };
       aa.next = bb;
       bb.prev = aa;
       // create sequence element and push onto head of main list. The order
@@ -275,8 +275,8 @@ export class ContourBuilder {
 }
 
 function pointsEqual(a: Point, b: Point) {
-  let x = a.x - b.x;
-  let y = a.y - b.y;
+  const x = a.x - b.x;
+  const y = a.y - b.y;
   return x * x + y * y < Number.EPSILON;
 }
 
@@ -302,16 +302,16 @@ export interface Point {
   x: number;
   y: number;
 }
-export type SequenceNode = {
+export interface SequenceNode {
   p: Point;
   next: SequenceNode | null;
   prev: SequenceNode | null;
-};
+}
 
-type Sequence = {
+interface Sequence {
   head: SequenceNode;
   tail: SequenceNode;
   next: Sequence | null;
   prev: Sequence | null;
   closed: boolean;
-};
+}
