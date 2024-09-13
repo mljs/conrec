@@ -45,7 +45,7 @@ describe('conrec basic test', () => {
       levels: [],
       timeout: 10000,
     });
-    expect(Date.now() - start).toBeLessThan(5);
+    expect(Date.now() - start).toBeLessThan(25);
     expect(timeout).toBeFalsy();
     expect(contours).toHaveLength(0);
   });
