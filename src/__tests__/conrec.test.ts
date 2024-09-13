@@ -45,9 +45,9 @@ describe('conrec basic test', () => {
       levels: [],
       timeout: 10000,
     });
+    expect(Date.now() - start).toBeLessThan(5);
     expect(timeout).toBeFalsy();
     expect(contours).toHaveLength(0);
-    expect(Date.now() - start).toBeLessThan(5);
   });
 
   it('auto select levels', () => {

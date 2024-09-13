@@ -49,6 +49,7 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.24.8",
     "@babel/preset-typescript": "^7.24.7",
+    "@types/node": "^22.5.4",
     "@vitest/coverage-v8": "^2.1.0",
     "eslint": "^8.38.0",
     "eslint-config-cheminfo-typescript": "^11.3.1",
