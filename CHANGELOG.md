@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.3](https://github.com/mljs/conrec/compare/v5.0.2...v5.0.3) (2024-09-13)
+
+
+### Bug Fixes
+
+* deal with the case levels array is empty ([e540c0c](https://github.com/mljs/conrec/commit/e540c0cf0b90222341ca19926e6cff1c24266830))
+
 ## [5.0.2](https://github.com/mljs/conrec/compare/v5.0.1...v5.0.2) (2023-05-18)
 
 
