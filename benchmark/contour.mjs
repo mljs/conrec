@@ -35,7 +35,7 @@ if (true) {
   result = (conrec.drawContour({
     contourDrawer: 'basic',
     levels,
-    timeout: 10000,
+    timeout: 100000,
   }));
   console.log(result.contours.length)
   console.timeEnd('basic');
