@@ -124,6 +124,7 @@ export function calculateContour(
     jlb = 0,
     jub = matrix[0].length - 1,
   } = options;
+  if (z.length === 0) return false;
   const h = new Array<number>(5);
   const sh = new Array<number>(5);
   const xh = new Array<number>(5);

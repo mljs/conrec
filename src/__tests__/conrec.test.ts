@@ -36,6 +36,19 @@ describe('conrec basic test', () => {
     expect(contours[1].lines).toHaveLength(119720);
   });
 
+  it('no levels', () => {
+    const conrec = new Conrec(matrix);
+    const start = Date.now();
+    const { contours, timeout } = conrec.drawContour({
+      contourDrawer: 'basic',
+      levels: [],
+      timeout: 10000,
+    });
+    expect(timeout).toBeFalsy();
+    expect(contours).toHaveLength(0);
+    expect(Date.now() - start).toBeLessThan(5);
+  });
+
   it('auto select levels', () => {
     const conrec = new Conrec(matrix);
     const { contours, timeout } = conrec.drawContour({
@@ -75,7 +88,7 @@ describe('conrec basic test', () => {
     const { contours, timeout } = conrec.drawContour({
       contourDrawer: 'basic',
       nbLevels: 10,
-      timeout: 100,
+      timeout: 10,
     });
     expect(timeout).toBeTruthy();
     expect(contours).toHaveLength(10);
