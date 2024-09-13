@@ -32,3 +32,5 @@ node_modules
 conrec.js
 lib-esm
 lib
+
+.DS_Store
