@@ -102,11 +102,11 @@ export class ShapeContourDrawer {
   }
 
   getContour() {
-    let l: ShapeContour[] = [];
-    let a = this.contours;
+    const l: ShapeContour[] = [];
+    const a = this.contours;
     for (let k = 0; k < a.length; k++) {
       let s = a[k].s;
-      let level = a[k].level;
+      const level = a[k].level;
       while (s) {
         let h: SequenceNode | null = s.head;
         const l2: ShapeContour = { lines: [], level, k };

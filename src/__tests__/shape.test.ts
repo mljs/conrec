@@ -84,7 +84,7 @@ function parse(string: string) {
     .filter((line) => line);
 
   const matrix: number[][] = [];
-  for (let line of lines) {
+  for (const line of lines) {
     matrix.push(line.split('').map((value: string) => parseInt(value, 10)));
   }
   return matrix;
