@@ -185,10 +185,10 @@ export function calculateContour(
       return true;
     }
     for (let i = ilb; i < iub; i++) {
-      let dij = matrix[i][j];
-      let dij1 = matrix[i][j + 1];
-      let di1j = matrix[i + 1][j];
-      let di1j1 = matrix[i + 1][j + 1];
+      const dij = matrix[i][j];
+      const dij1 = matrix[i][j + 1];
+      const di1j = matrix[i + 1][j];
+      const di1j1 = matrix[i + 1][j + 1];
       let min1, min2, max1, max2;
       if (dij > dij1) {
         min1 = dij1;
@@ -204,8 +204,8 @@ export function calculateContour(
         min2 = di1j;
         max2 = di1j1;
       }
-      let dmin = Math.min(min1, min2);
-      let dmax = Math.max(max1, max2);
+      const dmin = Math.min(min1, min2);
+      const dmax = Math.max(max1, max2);
       // Ternary operator is now much slower: https://jsbench.me/d5l0dh502g
       //let dmin = min1 > min2 ? min2 : min1;
       //let dmax = max1 > max2 ? max1 : max2;
@@ -270,7 +270,7 @@ export function calculateContour(
               } else {
                 m3 = 1;
               }
-              let caseValue = castab[sh[m1] + 1][sh[m2] + 1][sh[m3] + 1];
+              const caseValue = castab[sh[m1] + 1][sh[m2] + 1][sh[m3] + 1];
               if (caseValue !== 0) {
                 switch (caseValue) {
                   case 1: // Line between vertices 1 and 2
