@@ -2,6 +2,7 @@ import fs from 'fs';
 
 import { NumberMatrix } from 'cheminfo-types';
 import { convert } from 'jcampconverter';
+import { describe, it, expect } from 'vitest';
 
 import { Conrec } from '..';
 
