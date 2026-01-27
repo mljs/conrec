@@ -5,8 +5,20 @@ import { ShapeContourDrawer } from './ShapeContourDrawer';
 import { calculateContour } from './calculateContour';
 
 interface ConrecOptions {
+  /**
+   * x-values for the matrix columns
+   * @default [0, ..., matrix.length]
+   */
   xs?: Readonly<NumberArray>;
+  /**
+   * y-values for the matrix rows
+   * @default [0, ..., matrix[0].length]
+   */
   ys?: Readonly<NumberArray>;
+  /**
+   * means xs are in the rows direction. This is the normal way for the conrec library.
+   * @default false
+   */
   swapAxes?: boolean;
 }
 
@@ -58,9 +70,25 @@ export class Conrec {
   }
 
   drawContour<DrawerName extends ContourDrawerName>(options: {
+    /**
+     * z-values of the desired contour lines. If not provided, they will be computed automatically.
+     * @default nbLevels between min and max of the matrix
+     */
     levels?: readonly number[];
+    /**
+     * number of contour lines to compute if levels is not provided
+     * @default 10
+     */
     nbLevels?: number;
+    /**
+     * contour drawer name to use
+     * @default 'basic'
+     */
     contourDrawer?: DrawerName;
+    /**
+     * time in milliseconds before stopping the calculation
+     * @default 0 (no timeout)
+     */
     timeout?: number;
   }): DrawContourResult<DrawerName> {
     const { nbLevels = 10, timeout = 0, contourDrawer = 'basic' } = options;
