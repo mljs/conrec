@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`conrec basic test > auto select levels 1`] = `
+exports[`auto select levels 1`] = `
 [
   167.3376920421198,
   182.66230795788022,
@@ -37,7 +37,7 @@ exports[`conrec basic test > auto select levels 1`] = `
 ]
 `;
 
-exports[`conrec basic test > auto select levels with swapAxes 1`] = `
+exports[`auto select levels with swapAxes 1`] = `
 [
   182.66230795788022,
   167.3376920421198,
