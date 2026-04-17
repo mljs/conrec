@@ -29,8 +29,8 @@ node_modules
 # webstorm generated files
 .idea
 
-conrec.js
-lib-esm
 lib
 
 .DS_Store
+
+.claude
