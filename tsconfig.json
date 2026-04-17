@@ -1,12 +1,9 @@
 {
+  "extends": "@zakodium/tsconfig",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "moduleResolution": "node",
+    "noUncheckedIndexedAccess": false,
     "outDir": "lib",
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "es2020"
+    "types": ["node"]
   },
-  "include": ["./src/**/*"]
+  "include": ["src", "benchmark", "vitest.config.ts"]
 }
