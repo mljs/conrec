@@ -1,8 +1,8 @@
-import { NumberArray, NumberMatrix } from 'cheminfo-types';
+import type { NumberArray, NumberMatrix } from 'cheminfo-types';
 
-import { BasicContourDrawer } from './BasicContourDrawer';
-import { ShapeContourDrawer } from './ShapeContourDrawer';
-import { calculateContour } from './calculateContour';
+import { BasicContourDrawer } from './BasicContourDrawer.ts';
+import { ShapeContourDrawer } from './ShapeContourDrawer.ts';
+import { calculateContour } from './calculateContour.ts';
 
 interface ConrecOptions {
   xs?: Readonly<NumberArray>;
