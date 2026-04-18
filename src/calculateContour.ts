@@ -1,7 +1,7 @@
 // https://github.com/jasondavies/conrec.js
-import { NumberArray, NumberMatrix } from 'cheminfo-types';
+import type { NumberArray, NumberMatrix } from 'cheminfo-types';
 
-import { ContourDrawer } from '.';
+import type { ContourDrawer } from './index.ts';
 
 // Changes have been done by MLJS team
 
@@ -21,12 +21,12 @@ import { ContourDrawer } from '.';
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
+ *     Redistributions of source code must retain the above copyright
  *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
+ *     Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the <organization> nor the
+ *     Neither the name of the <organization> nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -95,7 +95,6 @@ interface CalculateContourOptions {
  *
  * Any number of contour levels may be specified but they must be in order of
  * increasing value.
- *
  * @private
  * @param matrix - matrix of data to contour
  *
@@ -104,9 +103,10 @@ interface CalculateContourOptions {
  * @param x  - data matrix column coordinates
  * @param y  - data matrix row coordinates
  * @param z  - contour levels in increasing order.
- * @param contourDrawer object that implements contourDraw for drawing contour.  Defaults to a
+ * @param contourDrawer - object that implements contourDraw for drawing contour.  Defaults to a
  *                               custom "contour builder", which populates the
  *                               contours property.
+ * @param options - additional calculation options (timeout and index bounds).
  * @returns Whether contour generation had to stop early because it reached the timeout
  */
 export function calculateContour(
@@ -135,7 +135,6 @@ export function calculateContour(
 
   const start = Date.now();
 
-  /** private */
   function xsect(p1: number, p2: number) {
     return (h[p2] * xh[p1] - h[p1] * xh[p2]) / (h[p2] - h[p1]);
   }
@@ -147,10 +146,10 @@ export function calculateContour(
   let m1;
   let m2;
   let m3;
-  let x1 = 0.0;
-  let x2 = 0.0;
-  let y1 = 0.0;
-  let y2 = 0.0;
+  let x1 = 0;
+  let x2 = 0;
+  let y1 = 0;
+  let y2 = 0;
 
   // The indexing of im and jm should be noted as it has to start from zero
   // unlike the fortran counter part
@@ -208,6 +207,10 @@ export function calculateContour(
       const dmin = Math.min(min1, min2);
       const dmax = Math.max(max1, max2);
       // Ternary operator is now much slower: https://jsbench.me/d5l0dh502g
+
+      //const dmin = (min1 + min2 - Math.abs(min1 - min2)) / 2;
+      //const dmax = (max1 + max2 + Math.abs(max1 - max2)) / 2;
+
       //let dmin = min1 > min2 ? min2 : min1;
       //let dmax = max1 > max2 ? max1 : max2;
       if (dmax >= z0 && dmin <= znc1) {

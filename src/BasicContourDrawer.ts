@@ -7,7 +7,7 @@ export class BasicContourDrawer {
   private contour: BasicContour[];
   private swapAxes: boolean;
 
-  constructor(levels: Readonly<number[]>, swapAxes: boolean) {
+  constructor(levels: readonly number[], swapAxes: boolean) {
     this.contour = [];
     for (const level of levels) {
       this.contour.push({
