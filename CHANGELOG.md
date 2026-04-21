@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.0.0](https://github.com/mljs/conrec/compare/v5.0.3...v6.0.0) (2026-04-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* package is now ESM-only; consumers using require() must migrate to import, or run Node.js ≥ 20.19 (or ≥ 22.12 / any 24.x), which supports require() of ESM.
+
+### Features
+
+* migrate package to ESM ([02f4ca3](https://github.com/mljs/conrec/commit/02f4ca3e822134c045600dba8602104816b1a9de))
+
 ## [5.0.3](https://github.com/mljs/conrec/compare/v5.0.2...v5.0.3) (2024-09-13)
 
 
