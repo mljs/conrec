@@ -206,13 +206,7 @@ export function calculateContour(
       }
       const dmin = Math.min(min1, min2);
       const dmax = Math.max(max1, max2);
-      // Ternary operator is now much slower: https://jsbench.me/d5l0dh502g
 
-      //const dmin = (min1 + min2 - Math.abs(min1 - min2)) / 2;
-      //const dmax = (max1 + max2 + Math.abs(max1 - max2)) / 2;
-
-      //let dmin = min1 > min2 ? min2 : min1;
-      //let dmax = max1 > max2 ? max1 : max2;
       if (dmax >= z0 && dmin <= znc1) {
         for (let k = 0; k < nc; k++) {
           if (z[k] >= dmin && z[k] <= dmax) {
